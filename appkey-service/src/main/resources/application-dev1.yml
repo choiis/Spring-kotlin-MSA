@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: appkey-service
+  config:
+    import: "optional:configserver:"
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+
+server:
+  port: 8100
+management:
+  server:
+    port: 9100
+  endpoints:
+    web:
+      exposure:
+        include: health

@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: "cloud-gateway"
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: appkey-service
+          uri: lb://appkey-service
+          predicates:
+            - Path=/appkey/**
+          filters:
+            - RewritePath=/appkey/?(?<segment>.*), /$\{segment}
+server:
+  port: 8000

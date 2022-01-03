@@ -1,0 +1,12 @@
+
+*.class
+
+.idea/
+.idea_modules/
+
+/spring-cloud.iml
+/.idea/
+/appkey-service/target/
+/gateway/target/
+/appkey-service/appkey-service.iml
+/gateway/gateway.iml
