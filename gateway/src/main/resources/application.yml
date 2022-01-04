@@ -16,5 +16,7 @@ spring:
             - Path=/appkey/**
           filters:
             - RewritePath=/appkey/?(?<segment>.*), /$\{segment}
+  zipkin:
+    base-url: http://localhost:9411
 server:
   port: 8000

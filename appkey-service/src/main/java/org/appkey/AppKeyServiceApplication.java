@@ -1,4 +1,4 @@
-package org.example.backend;
+package org.appkey;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
