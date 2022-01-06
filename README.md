@@ -5,7 +5,9 @@
 * Cassandra 서버를 준비한다
 * table.sql 파일로 keyspace와 테이블을 만들어 둔다
 
-* consul 설치 후 실행 한다
+* Consul 1.11.1버전 기준
+* https://www.consul.io/downloads 에서 1.11.1 버전 운영체제 맞게 다운
+* consul 압축 해제 후 Server로 실행 한다
 
 ```bash
 ./consul agent -server -bootstrap -ui -client=0.0.0.0 -data-dir ./data --bind=127.0.0.1 &
@@ -28,3 +30,6 @@ docker-compose up
 ### Service 실행
 * ./mvnw -pl appkey-service spring-boot:run -Dspring-boot.run.jvmArguments="-Dspring.profiles.active=dev1"
 * ./mvnw -pl appkey-service spring-boot:run -Dspring-boot.run.jvmArguments="-Dspring.profiles.active=dev2"
+
+* ./mvnw -pl api-service spring-boot:run -Dspring-boot.run.jvmArguments="-Dspring.profiles.active=dev1"
+* ./mvnw -pl api-service spring-boot:run -Dspring-boot.run.jvmArguments="-Dspring.profiles.active=dev2"

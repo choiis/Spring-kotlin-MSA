@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: api-service
+  config:
+    import: "optional:configserver:"
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+  zipkin:
+    base-url: http://localhost:9411
+
+server:
+  port: 8100
+management:
+  server:
+    port: 9100
+  endpoints:
+    web:
+      exposure:
+        include: health,traces
+  endpoint.traces.capacity: 2

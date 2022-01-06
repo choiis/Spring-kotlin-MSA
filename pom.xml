@@ -10,6 +10,7 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>appkey-service</module>
+        <module>api-service</module>
         <module>gateway</module>
     </modules>
 

@@ -9,5 +9,7 @@
 /.idea/
 /appkey-service/target/
 /gateway/target/
+/api-service/target/
 /appkey-service/appkey-service.iml
 /gateway/gateway.iml
+/api-service/api-service.iml
