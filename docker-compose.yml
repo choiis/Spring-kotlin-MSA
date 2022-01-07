@@ -1,0 +1,84 @@
+version: '3.7'
+networks:
+  msa-env:
+services:
+  jaeger:
+    image: jaegertracing/all-in-one:latest
+    restart: always
+    environment:
+      COLLECTOR_ZIPKIN_HOST_PORT: 9411
+    ports:
+      - "6831:6831/udp"
+      - "16686:16686"
+      - "9411:9411"
+    networks:
+      - msa-env
+  consul-server:
+    image: consul:latest
+    restart: always
+    ports:
+      - "8600:8600/udp"
+      - "8500:8500"
+    command: "agent -server  -bootstrap -ui -client=0.0.0.0"
+    networks:
+      - msa-env
+  gateway-server:
+    image: openjdk:11
+    restart: always
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./gateway/target/gateway-1.0-SNAPSHOT.jar:/opt/gateway-1.0-SNAPSHOT.jar
+    command: "java -jar /opt/gateway-1.0-SNAPSHOT.jar --spring.profiles.active=docker"
+    depends_on:
+        - consul-server
+    networks:
+      - msa-env
+  appkey-server-1:
+    image: openjdk:11
+    ports:
+      - "8100:8100"
+      - "9100:9100"
+    volumes:
+      - ./appkey-service/target/appkey-service-1.0-SNAPSHOT.jar:/opt/appkey-service-1.0-SNAPSHOT.jar  
+    command: "java -jar /opt/appkey-service-1.0-SNAPSHOT.jar --spring.profiles.active=docker1"
+    depends_on:
+        - consul-server
+    networks:
+      - msa-env
+  appkey-server-2:
+    image: openjdk:11
+    ports:
+      - "8101:8101"
+      - "9101:9101"
+    volumes:
+      - ./appkey-service/target/appkey-service-1.0-SNAPSHOT.jar:/opt/appkey-service-1.0-SNAPSHOT.jar  
+    command: "java -jar /opt/appkey-service-1.0-SNAPSHOT.jar --spring.profiles.active=docker2"
+    depends_on:
+        - consul-server
+    networks:
+      - msa-env
+  api-server-1:
+    image: openjdk:11
+    ports:
+      - "8300:8300"
+      - "9300:9300"
+    volumes:
+      - ./api-service/target/api-service-1.0-SNAPSHOT.jar:/opt/api-service-1.0-SNAPSHOT.jar 
+    command: "java -jar /opt/api-service-1.0-SNAPSHOT.jar  --spring.profiles.active=docker1"
+    depends_on:
+        - consul-server
+    networks:
+      - msa-env
+  api-server-2:
+    image: openjdk:11
+    ports:
+      - "8301:8301"
+      - "9301:9301"
+    volumes:
+      - ./api-service/target/api-service-1.0-SNAPSHOT.jar:/opt/api-service-1.0-SNAPSHOT.jar 
+    command: "java -jar /opt/api-service-1.0-SNAPSHOT.jar  --spring.profiles.active=docker2"
+    depends_on:
+        - consul-server
+    networks:
+      - msa-env

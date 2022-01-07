@@ -12,12 +12,15 @@
 ```bash
 ./consul agent -server -bootstrap -ui -client=0.0.0.0 -data-dir ./data --bind=127.0.0.1 &
 ```
+* http://localhost:8500 에서 확인
 
-* docker compose 설치 후 이 jaeger_all_in_one의 docker-compose.yml실행 
+
+* docker compose 설치 후 이 jaeger_all_in_one또는 jaeger_msa의 docker-compose.yml실행 
 * docker로 Jaeger Tracing실행한다
 ```bash
 docker-compose up
 ```
+* http://localhost:16686 에서 확인
 
 ## 실행
 
@@ -33,3 +36,11 @@ docker-compose up
 
 * ./mvnw -pl api-service spring-boot:run -Dspring-boot.run.jvmArguments="-Dspring.profiles.active=dev1"
 * ./mvnw -pl api-service spring-boot:run -Dspring-boot.run.jvmArguments="-Dspring.profiles.active=dev2"
+
+## docker-compose로 모두 실행
+
+### 전체 빌드
+* mvn clean pacakge spring-boot:repackage
+
+### docker-compose
+* docker-compose up

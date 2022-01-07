@@ -1,0 +1,28 @@
+spring:
+  application:
+    name: "cloud-gateway"
+  cloud:
+    consul:
+      host: consul-server
+      port: 8500
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: appkey-service
+          uri: lb://appkey-service
+          predicates:
+            - Path=/appkey/**
+          filters:
+            - RewritePath=/appkey/?(?<segment>.*), /$\{segment}
+        - id: api-service
+          uri: lb://api-service
+          predicates:
+            - Path=/api/**
+          filters:
+            - RewritePath=/api/?(?<segment>.*), /$\{segment}
+  zipkin:
+    base-url: http://jaeger:9411
+server:
+  port: 8000

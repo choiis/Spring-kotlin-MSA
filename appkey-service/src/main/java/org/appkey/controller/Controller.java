@@ -1,7 +1,7 @@
 package org.appkey.controller;
 
 
-import org.appkey.data.Sm01vo;
+import org.appkey.data.UserAppkey;
 import org.appkey.service.AppKeyService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,9 +25,9 @@ public class Controller {
     }
 
     @ExceptionHandler(NoSuchElementException.class)
-    public ResponseEntity<Sm01vo> noSuchElementException(NoSuchElementException ex) {
+    public ResponseEntity<UserAppkey> noSuchElementException(NoSuchElementException ex) {
         log.error(ex.getLocalizedMessage());
-        return new ResponseEntity<Sm01vo>(new Sm01vo(),HttpStatus.NOT_FOUND);
+        return new ResponseEntity<UserAppkey>(new UserAppkey(),HttpStatus.NOT_FOUND);
     }
 
     @Autowired
@@ -35,27 +35,27 @@ public class Controller {
 
     @ResponseBody
     @RequestMapping(value = "/sm01/{appkey}", method = RequestMethod.GET)
-    public ResponseEntity<Sm01vo> findByAppkey(@PathVariable String appkey) {
+    public ResponseEntity<UserAppkey> findByAppkey(@PathVariable String appkey) {
         log.info("findByAppkey ", appkey);
-        Sm01vo vo = appKeyService.findByPk(appkey);
-        return new ResponseEntity<Sm01vo>(vo, HttpStatus.OK);
+        UserAppkey vo = appKeyService.findByPk(appkey);
+        return new ResponseEntity<UserAppkey>(vo, HttpStatus.OK);
     }
 
     @ResponseBody
     @RequestMapping(value = "/sm01", method = RequestMethod.POST)
-    public ResponseEntity<Sm01vo> saveAppKey(@RequestBody Sm01vo vo) {
+    public ResponseEntity<UserAppkey> saveAppKey(@RequestBody UserAppkey vo) {
         log.info("saveAppKey ", vo);
         vo = appKeyService.save(vo);
-        return new ResponseEntity<Sm01vo>(vo, HttpStatus.CREATED);
+        return new ResponseEntity<UserAppkey>(vo, HttpStatus.CREATED);
     }
 
     @ResponseBody
     @RequestMapping(value = "/sm01/{appkey}", method = RequestMethod.DELETE)
-    public ResponseEntity<Sm01vo> deleteAppKey(@PathVariable String appkey) {
-        Sm01vo vo = new Sm01vo();
+    public ResponseEntity<UserAppkey> deleteAppKey(@PathVariable String appkey) {
+        UserAppkey vo = new UserAppkey();
         vo.setAppkey(appkey);
         log.info("saveAppKey ", vo);
         appKeyService.delete(vo);
-        return new ResponseEntity<Sm01vo>(vo, HttpStatus.NO_CONTENT);
+        return new ResponseEntity<UserAppkey>(vo, HttpStatus.NO_CONTENT);
     }
 }

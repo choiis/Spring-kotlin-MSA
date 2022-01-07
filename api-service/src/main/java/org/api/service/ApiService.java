@@ -3,7 +3,10 @@ package org.api.service;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 import org.api.data.UserAppkey;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -11,8 +14,14 @@ import org.springframework.web.client.RestTemplate;
 @Service
 public class ApiService {
 
+
+    private final static Logger log = LoggerFactory.getLogger(ApiService.class);
+
     @Autowired
     private RestTemplate restTemplate;
+
+    @Value("${appkey.url}")
+    private String apiUrl;
 
     @HystrixCommand(fallbackMethod = "getFallback",
             commandProperties = {
@@ -33,7 +42,8 @@ public class ApiService {
                     @HystrixProperty(name = "circuitBreaker.errorThresholdPercentage", value = "30")
             })
     public UserAppkey getAppKey(String appkey) {
-        ResponseEntity<UserAppkey> responseEntity = restTemplate.exchange("http://localhost:8100/sm01/{appkey}", HttpMethod.GET,new HttpEntity<>(new HttpHeaders()),UserAppkey.class,appkey);
+        log.info("appkey url " + apiUrl);
+        ResponseEntity<UserAppkey> responseEntity = restTemplate.exchange(apiUrl + "{appkey}", HttpMethod.GET,new HttpEntity<>(new HttpHeaders()),UserAppkey.class,appkey);
         return responseEntity.getBody();
     }
 
@@ -48,7 +58,8 @@ public class ApiService {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<UserAppkey> entity = new HttpEntity<>(userAppkey);
-        ResponseEntity<UserAppkey> responseEntity = restTemplate.exchange("http://localhost:8100/sm01", HttpMethod.POST,entity,UserAppkey.class);
+        log.info("appkey url " + apiUrl);
+        ResponseEntity<UserAppkey> responseEntity = restTemplate.exchange(apiUrl, HttpMethod.POST,entity,UserAppkey.class);
 
         return responseEntity.getBody();
     }
@@ -61,7 +72,8 @@ public class ApiService {
                     @HystrixProperty(name = "circuitBreaker.errorThresholdPercentage", value = "30")
             })
     public void deleteAppKey(String appkey) {
-        ResponseEntity<UserAppkey> responseEntity = restTemplate.exchange("http://localhost:8100/sm01/{appkey}", HttpMethod.DELETE,new HttpEntity<>(new HttpHeaders()),UserAppkey.class,appkey);
+        log.info("appkey url " + apiUrl);
+        ResponseEntity<UserAppkey> responseEntity = restTemplate.exchange(apiUrl + "{appkey}", HttpMethod.DELETE,new HttpEntity<>(new HttpHeaders()),UserAppkey.class,appkey);
         return;
     }
 

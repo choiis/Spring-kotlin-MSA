@@ -1,16 +1,34 @@
 ---
-version: '3.5'
-
-# Initially got from https://github.com/jaegertracing/jaeger/blob/master/docker-compose/jaeger-docker-compose.yml
+version: '2'
 
 services:
+    hotrod:
+      image: jaegertracing/example-hotrod:latest
+      ports:
+        - '8080:8080'
+        - '8083:8083'
+      command: ["-m","prometheus","all"]
+      environment:
+        - JAEGER_AGENT_HOST=jaeger-agent
+        - JAEGER_AGENT_PORT=6831
+        - JAEGER_SAMPLER_TYPE=remote
+        - JAEGER_SAMPLING_ENDPOINT=http://jaeger-agent:5778/sampling
+      depends_on:
+        - jaeger-agent
+
     jaeger-collector:
       image: jaegertracing/jaeger-collector
-      command: ["--cassandra.keyspace=jaeger_v1_dc1", "--cassandra.servers=cassandra", "--collector.zipkin.http-port=9411"]
+      command: 
+        - "--cassandra.keyspace=jaeger_v1_dc1"
+        - "--cassandra.servers=cassandra"
+        - "--collector.zipkin.host-port=9411"
+        - "--sampling.initial-sampling-probability=.5"
+        - "--sampling.target-samples-per-second=.01"
+      environment: 
+        - SAMPLING_CONFIG_TYPE=adaptive
       ports:
-        - "14269"
+        - "14269:14269"
         - "14268:14268"
-        - "14267"
         - "14250"
         - "9411:9411"
       restart: on-failure
@@ -40,8 +58,10 @@ services:
         - jaeger-collector
 
     cassandra:
-      image: cassandra:3.9
-
+      image: cassandra:4.0
+      ports:
+        - "9042:9042"
+        - "7000:7000"
     cassandra-schema:
       image: jaegertracing/jaeger-cassandra-schema
       depends_on:

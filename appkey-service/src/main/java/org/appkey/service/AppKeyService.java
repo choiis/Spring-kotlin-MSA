@@ -1,7 +1,7 @@
 package org.appkey.service;
 
 import org.appkey.dao.AppkeyRepository;
-import org.appkey.data.Sm01vo;
+import org.appkey.data.UserAppkey;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,17 +12,17 @@ public class AppKeyService {
     @Autowired
     private AppkeyRepository repository;
 
-    public Sm01vo findByPk(String appkey) {
-        Sm01vo vo = repository.findById(appkey).get();
+    public UserAppkey findByPk(String appkey) {
+        UserAppkey vo = repository.findById(appkey).get();
         return vo;
     }
 
-    public Sm01vo save(Sm01vo vo) {
+    public UserAppkey save(UserAppkey vo) {
         return  repository.save(vo);
     }
 
 
-    public void delete(Sm01vo vo) {
+    public void delete(UserAppkey vo) {
         repository.delete(vo);
     }
 }

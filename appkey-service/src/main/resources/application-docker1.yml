@@ -1,14 +1,20 @@
 spring:
   application:
-    name: api-service
+    name: appkey-service
   config:
     import: "optional:configserver:"
+  data:
+    cassandra:
+      contact-points: 10.162.0.141
+      port: 9042
+      keyspace-name: keys
+      local-datacenter: dc1
   cloud:
     consul:
-      host: localhost
+      host: consul-server
       port: 8500
   zipkin:
-    base-url: http://localhost:9411
+    base-url: http://jaeger:9411
 
 server:
   port: 8100
@@ -20,6 +26,3 @@ management:
       exposure:
         include: health,traces
   endpoint.traces.capacity: 2
-
-appkey:
-  url: http://localhost:8100/sm01/

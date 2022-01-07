@@ -20,3 +20,6 @@ management:
       exposure:
         include: health,traces
   endpoint.traces.capacity: 2
+
+appkey:
+  url: http://localhost:8100/sm01/
