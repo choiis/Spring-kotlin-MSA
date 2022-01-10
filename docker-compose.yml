@@ -23,60 +23,54 @@ services:
     networks:
       - msa-env
   gateway-server:
-    image: openjdk:11
+    image: api-gateway-docker
     restart: always
     ports:
       - "8000:8000"
-    volumes:
-      - ./gateway/target/gateway-1.0-SNAPSHOT.jar:/opt/gateway-1.0-SNAPSHOT.jar
     command: "java -jar /opt/gateway-1.0-SNAPSHOT.jar --spring.profiles.active=docker"
     depends_on:
         - consul-server
     networks:
       - msa-env
   appkey-server-1:
-    image: openjdk:11
+    image: appkey-service-docker
+    restart: unless-stopped
     ports:
       - "8100:8100"
       - "9100:9100"
-    volumes:
-      - ./appkey-service/target/appkey-service-1.0-SNAPSHOT.jar:/opt/appkey-service-1.0-SNAPSHOT.jar  
     command: "java -jar /opt/appkey-service-1.0-SNAPSHOT.jar --spring.profiles.active=docker1"
     depends_on:
         - consul-server
     networks:
       - msa-env
   appkey-server-2:
-    image: openjdk:11
+    image: appkey-service-docker
+    restart: unless-stopped
     ports:
       - "8101:8101"
       - "9101:9101"
-    volumes:
-      - ./appkey-service/target/appkey-service-1.0-SNAPSHOT.jar:/opt/appkey-service-1.0-SNAPSHOT.jar  
     command: "java -jar /opt/appkey-service-1.0-SNAPSHOT.jar --spring.profiles.active=docker2"
     depends_on:
         - consul-server
     networks:
       - msa-env
   api-server-1:
-    image: openjdk:11
+    image: api-service-docker
+    restart: unless-stopped
     ports:
       - "8300:8300"
       - "9300:9300"
-    volumes:
-      - ./api-service/target/api-service-1.0-SNAPSHOT.jar:/opt/api-service-1.0-SNAPSHOT.jar 
     command: "java -jar /opt/api-service-1.0-SNAPSHOT.jar  --spring.profiles.active=docker1"
     depends_on:
         - consul-server
     networks:
       - msa-env
   api-server-2:
-    image: openjdk:11
+    image: api-service-docker
+    restart: unless-stopped
     ports:
       - "8301:8301"
       - "9301:9301"
-    volumes:
-      - ./api-service/target/api-service-1.0-SNAPSHOT.jar:/opt/api-service-1.0-SNAPSHOT.jar 
     command: "java -jar /opt/api-service-1.0-SNAPSHOT.jar  --spring.profiles.active=docker2"
     depends_on:
         - consul-server
