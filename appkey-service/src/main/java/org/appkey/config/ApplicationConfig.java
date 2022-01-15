@@ -1,5 +1,6 @@
 package org.appkey.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.cassandra.config.AbstractCassandraConfiguration;
 import org.springframework.data.cassandra.repository.config.EnableCassandraRepositories;
@@ -8,6 +9,18 @@ import org.springframework.data.cassandra.repository.config.EnableCassandraRepos
 @EnableCassandraRepositories
 class ApplicationConfig extends AbstractCassandraConfiguration {
 
+    //@Value("${spring.data.cassandra.port}")
+    //public int port;
+
+    @Value("${spring.data.cassandra.contact-points}")
+    public String contactPoints;
+
+    @Value("${spring.data.cassandra.local-datacenter}")
+    public String datacenter;
+
+    @Value("${spring.data.cassandra.keyspace-name}")
+    public String keyspace;
+
     @Override
     public int getPort() {
         return 9042;
@@ -15,18 +28,18 @@ class ApplicationConfig extends AbstractCassandraConfiguration {
 
     @Override
     public String getContactPoints() {
-        return "192.168.35.204";
+        return contactPoints;
     }
 
 
     @Override
     public String getLocalDataCenter() {
-        return "dc1";
+        return datacenter;
     }
 
     @Override
     protected String getKeyspaceName() {
-        return "keys";
+        return keyspace;
     }
 
     public String[] getEntityBasePackages() {

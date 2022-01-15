@@ -15,6 +15,9 @@
     </modules>
 
     <properties>
+        <maven.version>${maven.build.timestamp}</maven.version>
+        <timestamp>${maven.build.timestamp}</timestamp>
+        <maven.build.timestamp.format>yyyyMMddHHmmss</maven.build.timestamp.format>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
     </properties>

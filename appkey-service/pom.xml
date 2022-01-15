@@ -74,6 +74,9 @@
                             <name>appkey-service-docker</name>
                             <build>
                                 <dockerFileDir>${basedir}</dockerFileDir>
+                                <tags>
+                                    <tag>${maven.build.timestamp}</tag>
+                                </tags>
                             </build>
                         </image>
                     </images>
