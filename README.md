@@ -40,7 +40,8 @@ docker-compose up
 ## docker-compose로 모두 실행
 
 ### 전체 빌드
-* mvn -pl gateway clean package spring-boot:repackage docker:build
+* mvn -pl gateway clean package spring-boot:repackage
+* mvn -pl gateway docker:build
 * mvn -pl appkey-service  clean package spring-boot:repackage docker:build
 * mvn -pl api-service  clean package spring-boot:repackage docker:build
 
