@@ -25,25 +25,34 @@ docker-compose up
 ## 실행
 
 ### 전체 빌드
-* ./mvnw clean install
+* mvn clean install
 
 ### Gateway 실행
-* ./mvnw -pl gateway spring-boot:run
+* mvn -pl gateway spring-boot:run
+
+### Config Server
+* mvn -pl config-server spring-boot:run -Dspring-boot.run.jvmArguments="-Dspring.profiles.active=dev1"
 
 ### Service 실행
-* ./mvnw -pl appkey-service spring-boot:run -Dspring-boot.run.jvmArguments="-Dspring.profiles.active=dev1"
-* ./mvnw -pl appkey-service spring-boot:run -Dspring-boot.run.jvmArguments="-Dspring.profiles.active=dev2"
+* mvn -pl appkey-service spring-boot:run -Dspring-boot.run.jvmArguments="-Dspring.profiles.active=dev1"
+* mvn -pl appkey-service spring-boot:run -Dspring-boot.run.jvmArguments="-Dspring.profiles.active=dev2"
 
-* ./mvnw -pl api-service spring-boot:run -Dspring-boot.run.jvmArguments="-Dspring.profiles.active=dev1"
-* ./mvnw -pl api-service spring-boot:run -Dspring-boot.run.jvmArguments="-Dspring.profiles.active=dev2"
+* mvn -pl api-service spring-boot:run -Dspring-boot.run.jvmArguments="-Dspring.profiles.active=dev1"
+* mvn -pl api-service spring-boot:run -Dspring-boot.run.jvmArguments="-Dspring.profiles.active=dev2"
 
 ## docker-compose로 모두 실행
+
+### config 바꾸기
+* appkey-service,api-service 프로젝트의 
+* application.yml의 내용을 application-docker1.yml내용으로 바꾼다
 
 ### 전체 빌드
 * mvn -pl gateway clean package spring-boot:repackage
 * mvn -pl gateway docker:build
-* mvn -pl appkey-service  clean package spring-boot:repackage docker:build
-* mvn -pl api-service  clean package spring-boot:repackage docker:build
+* mvn -pl appkey-service clean package spring-boot:repackage
+* mvn -pl appkey-service docker:build
+* mvn -pl api-service clean package spring-boot:repackage
+* mvn -pl api-service docker:build
 
 ### docker-compose
 * docker-compose up

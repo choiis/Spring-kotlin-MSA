@@ -23,3 +23,7 @@ management:
 
 appkey:
   url: http://gateway-server:8000/appkey-service/sm01/
+
+active:
+  profile:
+    name: docker2
