@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: cloud-config-server
+  cloud:
+    consul:
+      host: consul-server
+      port: 8500
+    config:
+      server:
+        git:
+          uri: https://github.com/choiis/config-yml
+server:
+  port: 8200
+management:
+  server:
+    port: 9200
+  endpoints:
+    web:
+      exposure:
+        include: health

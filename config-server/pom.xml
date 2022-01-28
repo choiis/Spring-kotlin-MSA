@@ -9,12 +9,13 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>gateway</artifactId>
+    <artifactId>config-server</artifactId>
 
     <dependencies>
+
         <dependency>
             <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-gateway</artifactId>
+            <artifactId>spring-cloud-config-server</artifactId>
         </dependency>
 
         <dependency>
@@ -25,16 +26,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-sleuth</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-sleuth-zipkin</artifactId>
         </dependency>
 
         <dependency>
@@ -61,7 +52,7 @@
                 <configuration>
                     <images>
                         <image>
-                            <name>api-gateway-docker</name>
+                            <name>config-server-docker</name>
                             <build>
                                 <dockerFileDir>${basedir}</dockerFileDir>
                                 <tags>
@@ -76,7 +67,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>msa.gateway.GatewayApplicationKt</mainClass>
+                    <mainClass>msa.config.ConfigServerApplicationKt</mainClass>
                 </configuration>
                 <executions>
                     <execution>
@@ -96,7 +87,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>msa.gateway.GatewayApplicationKt</mainClass>
+                            <mainClass>msa.config.ConfigServerApplicationKt</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
@@ -143,7 +134,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>msa.gateway.GatewayApplicationKt</mainClass>
+                            <mainClass>msa.config.ConfigServerApplicationKt</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>

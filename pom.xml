@@ -11,6 +11,7 @@
     <modules>
         <module>appkey-service</module>
         <module>api-service</module>
+        <module>config-server</module>
         <module>gateway</module>
     </modules>
 

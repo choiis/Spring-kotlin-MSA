@@ -10,6 +10,8 @@
 /appkey-service/target/
 /gateway/target/
 /api-service/target/
+/config-server/target/
 /appkey-service/appkey-service.iml
 /gateway/gateway.iml
 /api-service/api-service.iml
+/config-server/config-server.iml
