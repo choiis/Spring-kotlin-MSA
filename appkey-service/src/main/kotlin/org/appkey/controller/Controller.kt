@@ -18,7 +18,8 @@ class Controller {
     private val log: Logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass())
 
     @Value("\${active.profile.name}")
-    private val name: String? = null
+    private lateinit var name: String
+
     @GetMapping(value = [""])
     fun hello(): ResponseEntity<String> {
         log.info("App Key call")
@@ -40,12 +41,13 @@ class Controller {
     }
 
     @Autowired
-    private val appKeyService: AppKeyService? = null
+    private lateinit var appKeyService: AppKeyService
+
     @ResponseBody
     @RequestMapping(value = ["/sm01/{appkey}"], method = [RequestMethod.GET])
     fun findByAppkey(@PathVariable appkey: String): ResponseEntity<UserAppkey?> {
         log.info("findByAppkey ", appkey)
-        val vo = appKeyService!!.findByPk(appkey)
+        val vo = appKeyService.findByPk(appkey)
         return ResponseEntity(vo, HttpStatus.OK)
     }
 
@@ -54,7 +56,7 @@ class Controller {
     fun saveAppKey(@RequestBody vo: UserAppkey?): ResponseEntity<UserAppkey?> {
         var vo = vo
         log.info("saveAppKey ", vo)
-        vo = appKeyService!!.save(vo)
+        vo = appKeyService.save(vo!!)
         return ResponseEntity(vo, HttpStatus.CREATED)
     }
 
@@ -64,7 +66,7 @@ class Controller {
         val vo = UserAppkey()
         vo.appkey = appkey
         log.info("saveAppKey ", vo)
-        appKeyService!!.delete(vo)
+        appKeyService.delete(vo)
         return ResponseEntity(vo, HttpStatus.NO_CONTENT)
     }
 
