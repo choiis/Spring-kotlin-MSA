@@ -47,12 +47,10 @@ docker-compose up
 * application.yml의 내용을 application-docker1.yml내용으로 바꾼다
 
 ### 전체 빌드
-* mvn -pl gateway clean package spring-boot:repackage
-* mvn -pl gateway docker:build
-* mvn -pl appkey-service clean package spring-boot:repackage
-* mvn -pl appkey-service docker:build
-* mvn -pl api-service clean package spring-boot:repackage
-* mvn -pl api-service docker:build
+* mvn -pl gateway clean package spring-boot:repackage docker:build
+* mvn -pl config-server clean package spring-boot:repackage docker:build
+* mvn -pl appkey-service clean package spring-boot:repackage docker:build
+* mvn -pl api-service clean package spring-boot:repackage docker:build
 
 ### docker-compose
 * docker-compose up

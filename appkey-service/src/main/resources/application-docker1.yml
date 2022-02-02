@@ -26,7 +26,3 @@ management:
       exposure:
         include: health,traces
   endpoint.traces.capacity: 3
-
-active:
-  profile:
-    name: docker1

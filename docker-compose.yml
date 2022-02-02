@@ -32,6 +32,16 @@ services:
         - consul-server
     networks:
       - msa-env
+  config-server:
+    image: config-server-docker
+    restart: always
+    ports:
+      - "8200:8200"
+    command: "java -jar /opt/config-server-1.0-SNAPSHOT.jar --spring.profiles.active=docker1"
+    depends_on:
+      - consul-server
+    networks:
+      - msa-env
   appkey-server-1:
     image: appkey-service-docker
     restart: unless-stopped
@@ -41,6 +51,7 @@ services:
     command: "java -jar /opt/appkey-service-1.0-SNAPSHOT.jar --spring.profiles.active=docker1"
     depends_on:
         - consul-server
+        - config-server
     networks:
       - msa-env
   appkey-server-2:
@@ -52,6 +63,7 @@ services:
     command: "java -jar /opt/appkey-service-1.0-SNAPSHOT.jar --spring.profiles.active=docker2"
     depends_on:
         - consul-server
+        - config-server
     networks:
       - msa-env
   api-server-1:
@@ -63,6 +75,7 @@ services:
     command: "java -jar /opt/api-service-1.0-SNAPSHOT.jar  --spring.profiles.active=docker1"
     depends_on:
         - consul-server
+        - config-server
     networks:
       - msa-env
   api-server-2:
@@ -74,5 +87,6 @@ services:
     command: "java -jar /opt/api-service-1.0-SNAPSHOT.jar  --spring.profiles.active=docker2"
     depends_on:
         - consul-server
+        - config-server
     networks:
       - msa-env
