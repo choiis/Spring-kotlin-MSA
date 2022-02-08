@@ -26,3 +26,7 @@ management:
       exposure:
         include: health,traces
   endpoint.traces.capacity: 3
+
+logging:
+  file:
+    path: /opt/appkey-server-1/

@@ -23,3 +23,7 @@ management:
 
 appkey:
   url: http://gateway-server:8000/appkey-service/sm01/
+
+logging:
+  file:
+    path: /opt/api-server-1/

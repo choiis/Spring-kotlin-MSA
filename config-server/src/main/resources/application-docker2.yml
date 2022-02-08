@@ -18,3 +18,7 @@ management:
     web:
       exposure:
         include: health
+
+logging:
+  file:
+    path: /opt/config/

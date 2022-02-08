@@ -44,7 +44,7 @@ docker-compose up
 
 ### config 바꾸기
 * appkey-service,api-service 프로젝트의 
-* application.yml의 내용을 application-docker1.yml내용으로 바꾼다
+* application.yml의 내용을 application-docker.yml application-docker1.yml내용으로 바꾼다
 
 ### 전체 빌드
 * mvn -pl gateway clean package spring-boot:repackage docker:build
@@ -54,3 +54,6 @@ docker-compose up
 
 ### docker-compose
 * docker-compose up
+
+### logs 확인
+* docker volume 연결로 logs 디렉토리 아래에서 docker 컨테이너 로그를 볼 수 있다

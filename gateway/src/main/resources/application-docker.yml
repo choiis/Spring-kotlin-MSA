@@ -26,3 +26,7 @@ spring:
     base-url: http://jaeger:9411
 server:
   port: 8000
+
+logging:
+  file:
+    path: /opt/gateway/

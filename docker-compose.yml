@@ -30,6 +30,8 @@ services:
     command: "java -jar /opt/gateway-1.0-SNAPSHOT.jar --spring.profiles.active=docker"
     depends_on:
         - consul-server
+    volumes:
+      - ./logs/gateway:/opt/gateway
     networks:
       - msa-env
   config-server:
@@ -40,6 +42,8 @@ services:
     command: "java -jar /opt/config-server-1.0-SNAPSHOT.jar --spring.profiles.active=docker1"
     depends_on:
       - consul-server
+    volumes:
+      - ./logs/config:/opt/config
     networks:
       - msa-env
   appkey-server-1:
@@ -52,6 +56,8 @@ services:
     depends_on:
         - consul-server
         - config-server
+    volumes:
+      - ./logs/appkey-server-1:/opt/appkey-server-1
     networks:
       - msa-env
   appkey-server-2:
@@ -64,6 +70,8 @@ services:
     depends_on:
         - consul-server
         - config-server
+    volumes:
+      - ./logs/appkey-server-2:/opt/appkey-server-2
     networks:
       - msa-env
   api-server-1:
@@ -76,6 +84,8 @@ services:
     depends_on:
         - consul-server
         - config-server
+    volumes:
+      - ./logs/api-server-1:/opt/api-server-1
     networks:
       - msa-env
   api-server-2:
@@ -88,5 +98,7 @@ services:
     depends_on:
         - consul-server
         - config-server
+    volumes:
+      - ./logs/api-server-2:/opt/api-server-2
     networks:
       - msa-env
