@@ -9,6 +9,15 @@ spring:
       port: 8500
   zipkin:
     base-url: http://jaeger:9411
+  datasource:
+    url: jdbc:mysql://db-mysql:3306/db_tables?useSSL=false&characterEncoding=UTF-8&serverTimezone=UTC
+    username: user
+    password: 4321
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    show-sql: true
 
 server:
   port: 8300

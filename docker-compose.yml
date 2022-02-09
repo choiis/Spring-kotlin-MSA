@@ -2,6 +2,24 @@ version: '3.7'
 networks:
   msa-env:
 services:
+  db-mysql:
+    image: mysql:8.0.21
+    restart: always
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./mysql/db/initdb.d:/docker-entrypoint-initdb.d
+    environment:
+      - MYSQL_DATABASE=db_tables
+      - MYSQL_ROOT_PASSWORD=1234
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=4321
+      - TZ=Asia/Seoul
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+    networks:
+      - msa-env
   jaeger:
     image: jaegertracing/all-in-one:latest
     restart: always
@@ -84,6 +102,7 @@ services:
     depends_on:
         - consul-server
         - config-server
+        - db-mysql
     volumes:
       - ./logs/api-server-1:/opt/api-server-1
     networks:
@@ -98,6 +117,7 @@ services:
     depends_on:
         - consul-server
         - config-server
+        - db-mysql
     volumes:
       - ./logs/api-server-2:/opt/api-server-2
     networks:

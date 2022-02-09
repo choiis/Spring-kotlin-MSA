@@ -1,7 +1,8 @@
 package org.api.controller
 
-import org.api.ApiServiceApplication
+import org.api.data.Restaurant
 import org.api.data.UserAppkey
+import org.api.repo.RestaurantRepository
 import org.api.service.ApiService
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -19,6 +20,9 @@ class Controller {
 
     @Autowired
     private lateinit var apiService: ApiService
+
+    @Autowired
+    private lateinit var restaurantRepository: RestaurantRepository
 
     @Value("\${active.profile.name}")
     private lateinit var name: String
@@ -52,4 +56,48 @@ class Controller {
         return ResponseEntity(HttpStatus.NO_CONTENT)
     }
 
+    @ResponseBody
+    @RequestMapping(value = ["/restaurant"], method = [RequestMethod.POST])
+    fun restaurantPost(@RequestBody vo:Restaurant?): ResponseEntity<Restaurant?> {
+        restaurantRepository.save(vo!!)
+        return ResponseEntity(vo, HttpStatus.CREATED)
+    }
+
+    @ResponseBody
+    @RequestMapping(value = ["/restaurant"], method = [RequestMethod.GET])
+    fun restaurantAllGet(@RequestBody vo:Restaurant?): ResponseEntity<MutableList<Restaurant?>> {
+        return ResponseEntity(restaurantRepository.findAll(), HttpStatus.OK)
+    }
+
+    @ResponseBody
+    @RequestMapping(value = ["/restaurant/{rid}"], method = [RequestMethod.GET])
+    fun restaurantGet(@PathVariable rid: Int): ResponseEntity<Restaurant> {
+        var operationVo = restaurantRepository.findById(rid)
+        if (operationVo.isPresent) {
+            return ResponseEntity(operationVo.get(), HttpStatus.OK)
+        } else {
+            return ResponseEntity(Restaurant(), HttpStatus.NOT_FOUND)
+        }
+    }
+
+    @ResponseBody
+    @RequestMapping(value = ["/restaurant/name/{name}"], method = [RequestMethod.GET])
+    fun restaurantGetName(@PathVariable name: String): ResponseEntity<Restaurant> {
+
+        var operationVo = restaurantRepository.findByName(name)
+        if (operationVo.isPresent) {
+            return ResponseEntity(operationVo.get(), HttpStatus.OK)
+        } else {
+            return ResponseEntity(Restaurant(), HttpStatus.NOT_FOUND)
+        }
+    }
+
+    @ResponseBody
+    @RequestMapping(value = ["/restaurant/{rid}"], method = [RequestMethod.DELETE])
+    fun restaurantDelete(@PathVariable rid: Int): ResponseEntity<Restaurant> {
+        var vo:Restaurant = Restaurant();
+        vo.rid = rid;
+        restaurantRepository.delete(vo)
+        return ResponseEntity(HttpStatus.NO_CONTENT)
+    }
 }

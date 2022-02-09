@@ -22,6 +22,11 @@ docker-compose up
 ```
 * http://localhost:16686 에서 확인
 
+* mysql 폴더의 docker-compose.yml실행하여 mysql 서버 실행하고 table을 만들어준다
+```bash
+docker-compose up
+```
+
 ## 실행
 
 ### 전체 빌드

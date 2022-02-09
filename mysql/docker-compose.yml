@@ -1,0 +1,21 @@
+version: "3"
+services:
+  db-mysql:
+    image: mysql:8.0.21 
+    restart: always
+    #command: --lower_case_table_names=1
+    container_name: mysql # 컨테이너 이름 설정
+    ports:
+      - "3306:3306" 
+    volumes:
+      - ./db/initdb.d:/docker-entrypoint-initdb.d
+    environment: 
+      - MYSQL_DATABASE=db_tables
+      - MYSQL_ROOT_PASSWORD=1234  
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=4321
+      - TZ=Asia/Seoul
+
+    command: 
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
