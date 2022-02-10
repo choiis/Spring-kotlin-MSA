@@ -9,6 +9,9 @@ spring:
       port: 8500
   zipkin:
     base-url: http://jaeger:9411
+  sleuth:
+    sampler:
+      probability: 1.0
   datasource:
     url: jdbc:mysql://db-mysql:3306/db_tables?useSSL=false&characterEncoding=UTF-8&serverTimezone=UTC
     username: user

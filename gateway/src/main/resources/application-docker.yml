@@ -24,6 +24,9 @@ spring:
             - RewritePath=/api/?(?<segment>.*), /$\{segment}
   zipkin:
     base-url: http://jaeger:9411
+  sleuth:
+    sampler:
+      probability: 1.0
 server:
   port: 8000
 

@@ -15,7 +15,10 @@ spring:
       port: 8500
   zipkin:
     base-url: http://jaeger:9411
-
+  sleuth:
+    sampler:
+      probability: 1.0
+      
 server:
   port: 8100
 management:
