@@ -13,7 +13,7 @@ spring:
     sampler:
       probability: 1.0
   datasource:
-    url: jdbc:mysql://db-mysql:3306/db_tables?useSSL=false&characterEncoding=UTF-8&serverTimezone=UTC
+    url: jdbc:mysql://db-mysql:3306/db_tables?useSSL=false&characterEncoding=UTF-8&serverTimezone=UTC&allowPublicKeyRetrieval=true
     username: user
     password: 4321
     driver-class-name: com.mysql.cj.jdbc.Driver

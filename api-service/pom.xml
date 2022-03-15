@@ -92,6 +92,11 @@
                 <artifactId>docker-maven-plugin</artifactId>
                 <version>0.38.1</version>
                 <configuration>
+                    <registry>choiis1207</registry>
+                    <authConfig>
+                        <username>${docker.username}</username>
+                        <password>${docker.password}</password>
+                    </authConfig>
                     <images>
                         <image>
                             <name>api-service-docker</name>
