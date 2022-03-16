@@ -24,6 +24,7 @@ services:
     image: jaegertracing/all-in-one:latest
     restart: always
     environment:
+      TZ: Asia/Seoul
       COLLECTOR_ZIPKIN_HOST_PORT: 9411
     ports:
       - "6831:6831/udp"
@@ -38,6 +39,8 @@ services:
       - "8600:8600/udp"
       - "8500:8500"
     command: "agent -server  -bootstrap -ui -client=0.0.0.0"
+    environment:
+      TZ: Asia/Seoul
     networks:
       - msa-env
   gateway-server:
@@ -45,7 +48,9 @@ services:
     restart: always
     ports:
       - "8000:8000"
-    command: "java -jar /opt/gateway-1.0-SNAPSHOT.jar --spring.profiles.active=docker"
+    command: "--spring.profiles.active=docker"
+    environment:
+      TZ: Asia/Seoul
     depends_on:
         - consul-server
     volumes:
@@ -57,7 +62,9 @@ services:
     restart: always
     ports:
       - "8200:8200"
-    command: "java -jar /opt/config-server-1.0-SNAPSHOT.jar --spring.profiles.active=docker1"
+    command: "--spring.profiles.active=docker1"
+    environment:
+      TZ: Asia/Seoul
     depends_on:
       - consul-server
     volumes:
@@ -70,7 +77,9 @@ services:
     ports:
       - "8100:8100"
       - "9100:9100"
-    command: "java -jar /opt/appkey-service-1.0-SNAPSHOT.jar --spring.profiles.active=docker1"
+    command: "--spring.profiles.active=docker1"
+    environment:
+      TZ: Asia/Seoul
     depends_on:
         - consul-server
         - config-server
@@ -84,7 +93,9 @@ services:
     ports:
       - "8101:8101"
       - "9101:9101"
-    command: "java -jar /opt/appkey-service-1.0-SNAPSHOT.jar --spring.profiles.active=docker2"
+    command: "--spring.profiles.active=docker2"
+    environment:
+      TZ: Asia/Seoul
     depends_on:
         - consul-server
         - config-server
@@ -98,7 +109,9 @@ services:
     ports:
       - "8300:8300"
       - "9300:9300"
-    command: "java -jar /opt/api-service-1.0-SNAPSHOT.jar  --spring.profiles.active=docker1"
+    command: "--spring.profiles.active=docker1"
+    environment:
+      TZ: Asia/Seoul
     depends_on:
         - consul-server
         - config-server
@@ -113,7 +126,9 @@ services:
     ports:
       - "8301:8301"
       - "9301:9301"
-    command: "java -jar /opt/api-service-1.0-SNAPSHOT.jar  --spring.profiles.active=docker2"
+    command: "--spring.profiles.active=docker2"
+    environment:
+      TZ: Asia/Seoul
     depends_on:
         - consul-server
         - config-server
