@@ -1,57 +1,56 @@
 # Spring-Cloud-MSA
 
-## 준비
+## Prepare project environment
 
-* Cassandra 서버를 준비한다
-* table.sql 파일로 keyspace와 테이블을 만들어 둔다
-
-* Consul 1.11.1버전 기준
-* https://www.consul.io/downloads 에서 1.11.1 버전 운영체제 맞게 다운
-* consul 압축 해제 후 Server로 실행 한다
+* Prepare the Cassandra server
+* Create a keyspace and table with table.sql file
+* As of version 1.11.1 of Consul
+* Download version 1.11.1 according to your operating system from https://www.consul.io/downloads
+* After unzip Consul, run it as Server
 
 ```bash
 ./consul agent -server -bootstrap -ui -client=0.0.0.0 -data-dir ./data --bind=127.0.0.1 &
 ```
-* http://localhost:8500 에서 확인
+* Check at http://localhost:8500
 
 
-* docker compose 설치 후 이 jaeger_all_in_one또는 jaeger_msa의 docker-compose.yml실행 
-* docker로 Jaeger Tracing실행한다
+* After installing docker compose, run docker-compose.yml in this jaeger_all_in_one or jaeger_msa directory
+* Execute Jaeger Tracing with docker
 ```bash
 docker-compose up
 ```
-* http://localhost:16686 에서 확인
+* Check at http://localhost:16686
 
-* mysql 폴더의 docker-compose.yml실행하여 mysql 서버 실행하고 table을 만들어준다
+* Execute docker-compose.yml in mysql folder to run mysql server and create table
 ```bash
 docker-compose up
 ```
 
-## 실행
+## Execution
 
-### 전체 빌드
+### Build all
 * mvn clean install
 
-### Gateway 실행
+### Gateway Execution
 * mvn -pl gateway spring-boot:run
 
-### Config Server
+### Config Server Execution
 * mvn -pl config-server spring-boot:run -Dspring-boot.run.jvmArguments="-Dspring.profiles.active=dev1"
 
-### Service 실행
+### Service Execution
 * mvn -pl appkey-service spring-boot:run -Dspring-boot.run.jvmArguments="-Dspring.profiles.active=dev1"
 * mvn -pl appkey-service spring-boot:run -Dspring-boot.run.jvmArguments="-Dspring.profiles.active=dev2"
 
 * mvn -pl api-service spring-boot:run -Dspring-boot.run.jvmArguments="-Dspring.profiles.active=dev1"
 * mvn -pl api-service spring-boot:run -Dspring-boot.run.jvmArguments="-Dspring.profiles.active=dev2"
 
-## docker-compose로 모두 실행
+## Run all with docker-compose
 
-### config 바꾸기
-* appkey-service,api-service 프로젝트의 
-* application.yml의 내용을 application-docker.yml application-docker1.yml내용으로 바꾼다
+### config change
+* In the appkey-service,api-service project
+* Replace the contents of application.yml with the contents of application-docker.yml application-docker1.yml
 
-### 전체 빌드
+### Build all
 * mvn -pl gateway clean package spring-boot:repackage docker:build
 * mvn -pl config-server clean package spring-boot:repackage docker:build
 * mvn -pl appkey-service clean package spring-boot:repackage docker:build
@@ -60,5 +59,5 @@ docker-compose up
 ### docker-compose
 * docker-compose up
 
-### logs 확인
-* docker volume 연결로 logs 디렉토리 아래에서 docker 컨테이너 로그를 볼 수 있다
+### check logs
+* You can view the docker container logs under the logs directory by connecting to the docker volume.
