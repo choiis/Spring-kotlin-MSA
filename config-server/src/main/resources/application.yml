@@ -18,3 +18,95 @@ management:
     web:
       exposure:
         include: health
+
+logging:
+  file:
+    path: /opt/config/
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: dev1
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      enabled: true
+
+server:
+  port: 8200
+management:
+  server:
+    port: 9200
+
+ogging:
+  file:
+    path: /logs/config/
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: dev2
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      enabled: true
+
+server:
+  port: 8201
+management:
+  server:
+    port: 8201
+
+ogging:
+  file:
+    path: /logs/config/
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: docker1
+  cloud:
+    consul:
+      host: consul-server
+      port: 8500
+      enabled: true
+
+server:
+  port: 8200
+management:
+  server:
+    port: 9200
+
+ogging:
+  file:
+    path: /logs/config/
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: docker2
+  cloud:
+    consul:
+      host: consul-server
+      port: 8500
+      enabled: true
+
+server:
+  port: 8201
+management:
+  server:
+    port: 8201
+
+ogging:
+  file:
+    path: /logs/config/

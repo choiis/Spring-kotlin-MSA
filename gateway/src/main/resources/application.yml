@@ -29,3 +29,33 @@ spring:
       probability: 1.0
 server:
   port: 8000
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: dev
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+  zipkin:
+    base-url: http://localhost:9411
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: docker
+  cloud:
+    consul:
+      host: consul-server
+      port: 8500
+  zipkin:
+    base-url: http://jaeger:9411
+
+logging:
+  file:
+    path: /opt/gateway/

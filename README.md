@@ -46,10 +46,6 @@ docker-compose up
 
 ## Run all with docker-compose
 
-### config change
-* In the appkey-service,api-service project
-* Replace the contents of application.yml with the contents of application-docker.yml application-docker1.yml
-
 ### Build all
 * mvn -pl gateway clean package spring-boot:repackage docker:build
 * mvn -pl config-server clean package spring-boot:repackage docker:build

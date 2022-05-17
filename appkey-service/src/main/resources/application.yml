@@ -22,7 +22,7 @@ spring:
   sleuth:
     sampler:
       probability: 1.0
-      
+
 server:
   port: 8100
 management:
@@ -33,3 +33,97 @@ management:
       exposure:
         include: health,traces
   endpoint.traces.capacity: 3
+
+logging:
+  file:
+    path: /opt/appkey-server/
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: dev1
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      enabled: true
+
+server:
+  port: 8100
+management:
+  server:
+    port: 9100
+
+logging:
+  file:
+    path: /logs/appkey-server-1/
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: dev2
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      enabled: true
+
+server:
+  port: 8101
+management:
+  server:
+    port: 9101
+
+logging:
+  file:
+    path: /logs/appkey-server-2/
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: docker1
+  cloud:
+    consul:
+      host: consul-server
+      port: 8500
+  zipkin:
+    base-url: http://jaeger:9411
+
+server:
+  port: 8100
+management:
+  server:
+    port: 9100
+
+logging:
+  file:
+    path: /logs/appkey-server-1/
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: docker2
+  cloud:
+    consul:
+      host: consul-server
+      port: 8500
+  zipkin:
+    base-url: http://jaeger:9411
+
+server:
+  port: 8101
+management:
+  server:
+    port: 9101
+
+logging:
+  file:
+    path: /logs/appkey-server-2/
