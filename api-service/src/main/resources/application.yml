@@ -38,7 +38,7 @@ management:
   endpoint.traces.capacity: 3
 
 appkey:
-  url: http://localhost:8100/sm01/
+  url: http://appkey-service/sm01/
 
 logging:
   file:
@@ -52,8 +52,6 @@ spring:
       on-profile: dev1
   cloud:
     consul:
-      host: localhost
-      port: 8500
       enabled: true
 
 server:
@@ -61,9 +59,6 @@ server:
 management:
   server:
     port: 9300
-
-appkey:
-  url: http://localhost:8100/sm01/
 
 logging:
   file:
@@ -77,8 +72,6 @@ spring:
       on-profile: dev2
   cloud:
     consul:
-      host: localhost
-      port: 8500
       enabled: true
 
 server:
@@ -86,9 +79,6 @@ server:
 management:
   server:
     port: 9301
-
-appkey:
-  url: http://localhost:8100/sm01/
 
 logging:
   file:
@@ -100,10 +90,6 @@ spring:
   config:
     activate:
       on-profile: docker1
-  cloud:
-    consul:
-      host: consul-server
-      port: 8500
   zipkin:
     base-url: http://jaeger:9411
   datasource:
@@ -115,9 +101,6 @@ management:
   server:
     port: 9300
 
-appkey:
-  url: http://gateway-server:8000/appkey-service/sm01/
-
 logging:
   file:
     path: /logs/api-server-1/
@@ -128,10 +111,6 @@ spring:
   config:
     activate:
       on-profile: docker2
-  cloud:
-    consul:
-      host: consul-server
-      port: 8500
   zipkin:
     base-url: http://jaeger:9411
   datasource:
@@ -143,9 +122,7 @@ management:
   server:
     port: 9301
 
-appkey:
-  url: http://gateway-server:8000/appkey-service/sm01/
-
 logging:
   file:
     path: /logs/api-server-2/
+

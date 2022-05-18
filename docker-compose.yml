@@ -52,7 +52,7 @@ services:
     environment:
       TZ: Asia/Seoul
     depends_on:
-        - consul-server
+      - consul-server
     volumes:
       - ./logs/gateway:/opt/gateway
     networks:
@@ -77,12 +77,12 @@ services:
     ports:
       - "8100:8100"
       - "9100:9100"
-    command: "--spring.profiles.active=docker1"
+    command: "--spring.profiles.active=docker1  --spring.cloud.consul.host=consul-server"
     environment:
       TZ: Asia/Seoul
     depends_on:
-        - consul-server
-        - config-server
+      - consul-server
+      - config-server
     volumes:
       - ./logs/appkey-server-1:/opt/appkey-server-1
     networks:
@@ -93,12 +93,12 @@ services:
     ports:
       - "8101:8101"
       - "9101:9101"
-    command: "--spring.profiles.active=docker2"
+    command: "--spring.profiles.active=docker2  --spring.cloud.consul.host=consul-server"
     environment:
       TZ: Asia/Seoul
     depends_on:
-        - consul-server
-        - config-server
+      - consul-server
+      - config-server
     volumes:
       - ./logs/appkey-server-2:/opt/appkey-server-2
     networks:
@@ -109,13 +109,13 @@ services:
     ports:
       - "8300:8300"
       - "9300:9300"
-    command: "--spring.profiles.active=docker1"
+    command: "--spring.profiles.active=docker1  --spring.cloud.consul.host=consul-server"
     environment:
       TZ: Asia/Seoul
     depends_on:
-        - consul-server
-        - config-server
-        - db-mysql
+      - consul-server
+      - config-server
+      - db-mysql
     volumes:
       - ./logs/api-server-1:/opt/api-server-1
     networks:
@@ -126,13 +126,13 @@ services:
     ports:
       - "8301:8301"
       - "9301:9301"
-    command: "--spring.profiles.active=docker2"
+    command: "--spring.profiles.active=docker2  --spring.cloud.consul.host=consul-server"
     environment:
       TZ: Asia/Seoul
     depends_on:
-        - consul-server
-        - config-server
-        - db-mysql
+      - consul-server
+      - config-server
+      - db-mysql
     volumes:
       - ./logs/api-server-2:/opt/api-server-2
     networks:

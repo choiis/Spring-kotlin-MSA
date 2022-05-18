@@ -1,6 +1,7 @@
 package org.api.config
 
 import org.springframework.boot.web.client.RestTemplateBuilder
+import org.springframework.cloud.client.loadbalancer.LoadBalanced
 import org.springframework.web.client.RestTemplate
 import org.springframework.http.client.BufferingClientHttpRequestFactory
 import org.springframework.http.client.SimpleClientHttpRequestFactory
@@ -12,6 +13,7 @@ import java.time.Duration
 
 @Configuration
 open class RestTemplateConfig {
+    @LoadBalanced
     @Bean
     open fun restTemplate(restTemplateBuilder: RestTemplateBuilder): RestTemplate {
         return restTemplateBuilder

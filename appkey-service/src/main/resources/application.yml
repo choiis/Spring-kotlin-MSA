@@ -46,8 +46,6 @@ spring:
       on-profile: dev1
   cloud:
     consul:
-      host: localhost
-      port: 8500
       enabled: true
 
 server:
@@ -68,8 +66,6 @@ spring:
       on-profile: dev2
   cloud:
     consul:
-      host: localhost
-      port: 8500
       enabled: true
 
 server:
@@ -88,10 +84,6 @@ spring:
   config:
     activate:
       on-profile: docker1
-  cloud:
-    consul:
-      host: consul-server
-      port: 8500
   zipkin:
     base-url: http://jaeger:9411
 
@@ -111,10 +103,6 @@ spring:
   config:
     activate:
       on-profile: docker2
-  cloud:
-    consul:
-      host: consul-server
-      port: 8500
   zipkin:
     base-url: http://jaeger:9411
 
@@ -127,3 +115,4 @@ management:
 logging:
   file:
     path: /logs/appkey-server-2/
+
