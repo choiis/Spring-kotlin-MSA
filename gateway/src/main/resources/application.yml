@@ -30,6 +30,19 @@ spring:
 server:
   port: 8000
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    loggers:
+      enabled: true
+    health:
+      enabled: true
+    prometheus:
+      enabled: true
+
 ---
 
 spring:

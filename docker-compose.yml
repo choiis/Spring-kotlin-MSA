@@ -62,6 +62,7 @@ services:
     restart: always
     ports:
       - "8200:8200"
+      - "9200:9200"
     command: "--spring.profiles.active=docker1"
     environment:
       TZ: Asia/Seoul

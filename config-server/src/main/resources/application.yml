@@ -17,14 +17,20 @@ management:
   endpoints:
     web:
       exposure:
-        include: health
+        include: '*'
+  endpoint:
+    loggers:
+      enabled: true
+    health:
+      enabled: true
+    prometheus:
+      enabled: true
 
 logging:
   file:
     path: /opt/config/
 
 ---
-
 spring:
   config:
     activate:
@@ -46,7 +52,6 @@ ogging:
     path: /logs/config/
 
 ---
-
 spring:
   config:
     activate:
@@ -68,7 +73,6 @@ ogging:
     path: /logs/config/
 
 ---
-
 spring:
   config:
     activate:
@@ -90,7 +94,6 @@ ogging:
     path: /logs/config/
 
 ---
-
 spring:
   config:
     activate:

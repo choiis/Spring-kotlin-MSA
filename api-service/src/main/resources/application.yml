@@ -34,8 +34,14 @@ management:
   endpoints:
     web:
       exposure:
-        include: health,traces
-  endpoint.traces.capacity: 3
+        include: '*'
+  endpoint:
+    loggers:
+      enabled: true
+    prometheus:
+      enabled: true
+    health:
+      enabled: true
 
 appkey:
   url: http://appkey-service/sm01/
