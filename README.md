@@ -55,5 +55,13 @@ docker-compose up
 ### docker-compose
 * docker-compose up
 
+### check Jaeger trace
+* You can search traces between MSA services at http://localhost:16686
+![Jaeger1](http://imageresizer-dev-serverlessdeploymentbucket-xapz1q6q9exe.s3-website-ap-northeast-1.amazonaws.com/gitpng/jaeger_search.png)
+
+* You can see the structure of calls between MSA services
+![Jaeger2](http://imageresizer-dev-serverlessdeploymentbucket-xapz1q6q9exe.s3-website-ap-northeast-1.amazonaws.com/gitpng/jaeger_topology.png)
+
+
 ### check logs
 * You can view the docker container logs under the logs directory by connecting to the docker volume.
