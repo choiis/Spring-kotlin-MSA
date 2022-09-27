@@ -1,15 +1,15 @@
-package org.api.data
+package org.api.restaurant
 
 import lombok.AllArgsConstructor
-import lombok.EqualsAndHashCode
+import lombok.Data
 import lombok.NoArgsConstructor
 import javax.persistence.*
 
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode
+@Data
 @Entity(name ="restaurant")
-open class Restaurant {
+open class RestaurantEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

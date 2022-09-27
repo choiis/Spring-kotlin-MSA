@@ -1,9 +1,8 @@
-package org.api.service
+package org.api.appkey
 
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty
 import org.springframework.web.client.RestTemplate
-import org.api.data.UserAppkey
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
@@ -87,7 +86,7 @@ open class ApiService {
     }
 
     private fun getFallback2(appkey: String): UserAppkey {
-        val userAppkey:UserAppkey = UserAppkey()
+        val userAppkey: UserAppkey = UserAppkey()
         userAppkey.appkey = "$appkey not found"
         return userAppkey
     }

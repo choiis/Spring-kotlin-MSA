@@ -1,4 +1,4 @@
-package org.api.data
+package org.api.appkey
 
 import lombok.*
 
