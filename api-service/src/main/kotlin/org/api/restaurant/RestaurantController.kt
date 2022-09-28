@@ -14,13 +14,13 @@ class RestaurantController {
     private lateinit var restaurantService: RestaurantService
 
     @RequestMapping(value = ["/restaurant"], method = [RequestMethod.POST])
-    fun restaurantPost(@RequestBody vo: RestaurantEntity?): ResponseEntity<RestaurantResponse?> {
+    fun restaurantPost(@RequestBody vo: RestaurantRequest?): ResponseEntity<RestaurantResponse?> {
         var response = restaurantService.saveRestaurant(vo!!)
         return ResponseEntity(response, HttpStatus.CREATED)
     }
 
     @RequestMapping(value = ["/restaurant"], method = [RequestMethod.GET])
-    fun restaurantAllGet(@RequestBody vo: RestaurantEntity?): ResponseEntity<List<RestaurantResponse>> {
+    fun restaurantAllGet(): ResponseEntity<List<RestaurantResponse>> {
         return ResponseEntity(restaurantService.getRestaurantAllList(), HttpStatus.OK)
     }
 

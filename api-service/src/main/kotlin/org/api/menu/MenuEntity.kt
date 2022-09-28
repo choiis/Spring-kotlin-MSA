@@ -5,7 +5,6 @@ import lombok.Data
 import lombok.NoArgsConstructor
 import org.api.restaurant.RestaurantEntity
 import org.hibernate.annotations.GenericGenerator
-import org.hibernate.annotations.Parameter
 import javax.persistence.*
 
 @NoArgsConstructor
@@ -16,14 +15,7 @@ open class MenuEntity {
 
     @Id
     @GeneratedValue(generator = "UUID")
-    @GenericGenerator(
-        name = "UUID",
-        strategy = "org.hibernate.id.UUIDGenerator",
-        parameters = [Parameter(
-            name = "uuid_gen_strategy_class",
-            value = "org.hibernate.id.uuid.CustomVersionOneStrategy"
-        )]
-    )
+    @GenericGenerator(name = "uuid", strategy = "uuid2")
     @Column(name = "mid", length = 36)
     var mid: String? = null
 
@@ -32,7 +24,7 @@ open class MenuEntity {
     @JoinColumn(name = "rid", referencedColumnName = "rid")
     var restaurant: RestaurantEntity? = null
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     var name: String? = null
 
     var star:Int = 0

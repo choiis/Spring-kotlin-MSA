@@ -5,7 +5,7 @@ data class MenuResponse(
     val rid: Int,
     val name: String?,
     val star: Int,
-    val const: Int
+    val cost: Int
 ) {
 
 }
