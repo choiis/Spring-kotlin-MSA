@@ -31,7 +31,7 @@ class MenuService {
 
 
     @Transactional(readOnly = true)
-    fun getMenuByRid(rid: Int) : List<MenuResponse> {
+    fun getMenuByRid(rid: String) : List<MenuResponse> {
        var list = menuRepository.findByRestaurant_Rid(rid)
         var menuList = arrayListOf<MenuResponse>();
         for (entity in list) {

@@ -5,9 +5,9 @@ import org.springframework.stereotype.Repository
 import java.util.*
 
 @Repository
-interface MenuRepository : JpaRepository<MenuEntity?, Int> {
+interface MenuRepository : JpaRepository<MenuEntity?, String> {
 
     fun findByMid(mid: String): Optional<MenuEntity>
 
-    fun findByRestaurant_Rid(rid:Int) : List<MenuEntity>
+    fun findByRestaurant_Rid(rid:String) : List<MenuEntity>
 }

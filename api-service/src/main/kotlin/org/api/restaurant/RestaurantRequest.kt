@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor
 @Data
 open class RestaurantRequest {
 
-    var rid:Int = 0
+    var rid:String? = null
 
     var name: String? = null
 

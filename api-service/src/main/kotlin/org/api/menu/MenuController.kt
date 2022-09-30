@@ -30,7 +30,7 @@ class MenuController {
     }
 
     @RequestMapping(value = ["/menu/restaurant/{rid}"], method = [RequestMethod.GET])
-    fun menuRestaurantGet(@PathVariable rid: Int): ResponseEntity<List<MenuResponse>> {
+    fun menuRestaurantGet(@PathVariable rid: String): ResponseEntity<List<MenuResponse>> {
         return ResponseEntity(menuService.getMenuByRid(rid), HttpStatus.OK)
     }
 

@@ -31,7 +31,7 @@ open class RestaurantService {
     }
 
     @Transactional(readOnly = true)
-    fun getRestaurantOne(rid:Int) : RestaurantResponse? {
+    fun getRestaurantOne(rid:String) : RestaurantResponse? {
         var option = restaurantRepository.findById(rid)
         if (option.isPresent) {
             var entity = option.get()
@@ -53,7 +53,7 @@ open class RestaurantService {
     }
 
     @Transactional
-    fun removeRestaurantOne(rid:Int) {
+    fun removeRestaurantOne(rid:String) {
         var vo: RestaurantEntity = RestaurantEntity();
         vo.rid = rid;
         restaurantRepository.delete(vo)

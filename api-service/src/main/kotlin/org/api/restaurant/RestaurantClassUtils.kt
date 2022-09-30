@@ -8,7 +8,6 @@ class RestaurantClassUtils {
 
         fun requestToEntity(request: RestaurantRequest) : RestaurantEntity {
             var entity:RestaurantEntity = RestaurantEntity()
-            entity.rid = request.rid
             entity.name = request.name
             entity.location = request.location
             entity.star = request.star

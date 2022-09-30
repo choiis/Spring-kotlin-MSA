@@ -25,7 +25,7 @@ class RestaurantController {
     }
 
     @RequestMapping(value = ["/restaurant/{rid}"], method = [RequestMethod.GET])
-    fun restaurantGet(@PathVariable rid: Int): ResponseEntity<RestaurantResponse> {
+    fun restaurantGet(@PathVariable rid: String): ResponseEntity<RestaurantResponse> {
         var response = restaurantService.getRestaurantOne(rid)
         if (response != null) {
             return ResponseEntity(response, HttpStatus.OK)
@@ -46,7 +46,7 @@ class RestaurantController {
 
     @ResponseBody
     @RequestMapping(value = ["/restaurant/{rid}"], method = [RequestMethod.DELETE])
-    fun restaurantDelete(@PathVariable rid: Int): ResponseEntity<RestaurantResponse> {
+    fun restaurantDelete(@PathVariable rid: String): ResponseEntity<RestaurantResponse> {
         restaurantService.removeRestaurantOne(rid)
         return ResponseEntity(HttpStatus.NO_CONTENT)
     }

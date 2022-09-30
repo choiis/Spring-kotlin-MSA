@@ -3,7 +3,12 @@ package org.api.restaurant
 import lombok.AllArgsConstructor
 import lombok.Data
 import lombok.NoArgsConstructor
-import javax.persistence.*
+import org.hibernate.annotations.GenericGenerator
+import org.hibernate.annotations.Parameter
+import javax.persistence.Column
+import javax.persistence.Entity
+import javax.persistence.GeneratedValue
+import javax.persistence.Id
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -12,8 +17,17 @@ import javax.persistence.*
 open class RestaurantEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var rid:Int = 0
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(
+        name = "UUID",
+        strategy = "org.hibernate.id.UUIDGenerator",
+        parameters = [Parameter(
+            name = "uuid_gen_strategy_class",
+            value = "org.hibernate.id.uuid.CustomVersionOneStrategy"
+        )]
+    )
+    @Column(name = "rid", length = 36)
+    var rid:String? = null
 
     @Column(nullable = false, unique = true)
     var name: String? = null

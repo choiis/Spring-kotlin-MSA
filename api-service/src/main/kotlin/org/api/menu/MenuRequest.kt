@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor
 @Data
 open class MenuRequest {
 
-    val rid: Int = 0
+    val rid: String? = null
 
     var name: String? = null
 

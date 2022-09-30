@@ -5,7 +5,7 @@ import org.springframework.stereotype.Repository
 import java.util.*
 
 @Repository
-interface RestaurantRepository : JpaRepository<RestaurantEntity?, Int> {
+interface RestaurantRepository : JpaRepository<RestaurantEntity?, String> {
 
     fun findByName(name: String): Optional<RestaurantEntity>
 
