@@ -3,6 +3,7 @@ package org.api.restaurant
 import lombok.AllArgsConstructor
 import lombok.Data
 import lombok.NoArgsConstructor
+import org.api.common.BaseEntity
 import org.hibernate.annotations.GenericGenerator
 import org.hibernate.annotations.Parameter
 import javax.persistence.Column
@@ -14,7 +15,7 @@ import javax.persistence.Id
 @AllArgsConstructor
 @Data
 @Entity(name ="restaurant")
-open class RestaurantEntity {
+open class RestaurantEntity : BaseEntity() {
 
     @Id
     @GeneratedValue(generator = "UUID")

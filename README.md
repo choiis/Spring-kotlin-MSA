@@ -1,5 +1,7 @@
 # Spring-Cloud-MSA
 
+* Spring MSA api gateway & service discovery with consul & Jaeger & MySQL JPA & Cassandra
+
 ## Prepare project environment
 
 * Prepare the Cassandra server
