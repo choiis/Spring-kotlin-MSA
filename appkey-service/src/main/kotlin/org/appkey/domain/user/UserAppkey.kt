@@ -1,14 +1,12 @@
-package org.appkey.data
+package org.appkey.domain.user
 
 import lombok.*
 import org.springframework.data.cassandra.core.mapping.PrimaryKey
 import org.springframework.data.cassandra.core.mapping.Table
 
 @Table("sm01")
-@NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode
-@ToString
+@Data
 class UserAppkey {
 
     @PrimaryKey

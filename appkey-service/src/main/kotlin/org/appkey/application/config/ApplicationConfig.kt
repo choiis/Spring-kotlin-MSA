@@ -1,4 +1,4 @@
-package org.appkey.config
+package org.appkey.application.config
 
 import org.springframework.data.cassandra.repository.config.EnableCassandraRepositories
 import org.springframework.data.cassandra.config.AbstractCassandraConfiguration
@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration
 
 @Configuration
 @EnableCassandraRepositories
-open class ApplicationConfig : AbstractCassandraConfiguration() {
+class ApplicationConfig : AbstractCassandraConfiguration() {
     //@Value("${spring.data.cassandra.port}")
     //public int port;
     @Value("\${spring.data.cassandra.contact-points}")
