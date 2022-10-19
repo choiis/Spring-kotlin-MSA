@@ -1,4 +1,6 @@
-package org.api.restaurant
+package org.api.application.restaurant
+
+import org.api.entity.restaurant.RestaurantEntity
 
 
 class RestaurantClassUtils {
@@ -7,7 +9,7 @@ class RestaurantClassUtils {
     companion object {
 
         fun requestToEntity(request: RestaurantRequest) : RestaurantEntity {
-            var entity:RestaurantEntity = RestaurantEntity()
+            var entity: RestaurantEntity = RestaurantEntity()
             entity.name = request.name
             entity.location = request.location
             entity.star = request.star

@@ -1,6 +1,7 @@
-package org.api.menu
+package org.api.application.menu
 
-import org.api.restaurant.RestaurantEntity
+import org.api.entity.menu.MenuEntity
+import org.api.entity.restaurant.RestaurantEntity
 
 class MenuClassUtils {
 

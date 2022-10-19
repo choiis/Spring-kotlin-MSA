@@ -1,5 +1,7 @@
-package org.api.restaurant
+package org.api.application.restaurant
 
+import org.api.entity.restaurant.RestaurantEntity
+import org.api.entity.restaurant.RestaurantRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional

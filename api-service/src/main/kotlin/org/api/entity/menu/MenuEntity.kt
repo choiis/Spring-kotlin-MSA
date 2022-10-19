@@ -1,10 +1,10 @@
-package org.api.menu
+package org.api.entity.menu
 
 import lombok.AllArgsConstructor
 import lombok.Data
 import lombok.NoArgsConstructor
-import org.api.common.BaseEntity
-import org.api.restaurant.RestaurantEntity
+import org.api.entity.BaseEntity
+import org.api.entity.restaurant.RestaurantEntity
 import org.hibernate.annotations.GenericGenerator
 import org.hibernate.annotations.Parameter
 import javax.persistence.*

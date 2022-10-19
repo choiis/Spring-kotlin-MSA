@@ -1,4 +1,4 @@
-package org.api.restaurant
+package org.api.application.restaurant
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

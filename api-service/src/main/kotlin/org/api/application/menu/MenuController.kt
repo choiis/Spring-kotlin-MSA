@@ -1,4 +1,4 @@
-package org.api.menu
+package org.api.application.menu
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus

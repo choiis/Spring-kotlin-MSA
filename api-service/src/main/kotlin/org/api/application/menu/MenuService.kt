@@ -1,5 +1,7 @@
-package org.api.menu
+package org.api.application.menu
 
+import org.api.entity.menu.MenuEntity
+import org.api.entity.menu.MenuRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional

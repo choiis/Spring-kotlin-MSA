@@ -1,4 +1,4 @@
-package org.api.menu
+package org.api.application.menu
 
 import lombok.Data
 import lombok.NoArgsConstructor

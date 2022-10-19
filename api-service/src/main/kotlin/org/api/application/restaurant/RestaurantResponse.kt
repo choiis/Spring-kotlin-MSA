@@ -1,4 +1,4 @@
-package org.api.restaurant
+package org.api.application.restaurant
 
 data class RestaurantResponse(
     val rid: String?,

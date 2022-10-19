@@ -1,4 +1,4 @@
-package org.api.menu
+package org.api.entity.menu
 
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
