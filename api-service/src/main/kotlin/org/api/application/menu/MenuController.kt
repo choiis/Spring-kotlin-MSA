@@ -15,17 +15,17 @@ class MenuController {
 
     @RequestMapping(value = ["/menu"], method = [RequestMethod.POST])
     fun menuPost(@RequestBody vo: MenuRequest?): ResponseEntity<MenuResponse?> {
-        var response = menuService.saveMenu(vo!!)
+        val response = menuService.saveMenu(vo!!)
         return ResponseEntity(response, HttpStatus.CREATED)
     }
 
     @RequestMapping(value = ["/menu/{mid}"], method = [RequestMethod.GET])
     fun menuGet(@PathVariable mid: String): ResponseEntity<MenuResponse> {
-        var response = menuService.getMenuOne(mid)
-        if (response != null) {
-            return ResponseEntity(response, HttpStatus.OK)
+        val response = menuService.getMenuOne(mid)
+        return if (response != null) {
+            ResponseEntity(response, HttpStatus.OK)
         } else {
-            return ResponseEntity(null, HttpStatus.NOT_FOUND)
+            ResponseEntity(null, HttpStatus.NOT_FOUND)
         }
     }
 

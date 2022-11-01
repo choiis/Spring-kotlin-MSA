@@ -1,6 +1,7 @@
 package org.api.application.restaurant
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*
@@ -15,32 +16,34 @@ class RestaurantController {
 
     @RequestMapping(value = ["/restaurant"], method = [RequestMethod.POST])
     fun restaurantPost(@RequestBody vo: RestaurantRequest?): ResponseEntity<RestaurantResponse?> {
-        var response = restaurantService.saveRestaurant(vo!!)
+        val response = restaurantService.saveRestaurant(vo!!)
         return ResponseEntity(response, HttpStatus.CREATED)
     }
 
+
     @RequestMapping(value = ["/restaurant"], method = [RequestMethod.GET])
-    fun restaurantAllGet(): ResponseEntity<List<RestaurantResponse>> {
-        return ResponseEntity(restaurantService.getRestaurantAllList(), HttpStatus.OK)
+    fun restaurantAllGet(@RequestParam(value = "page", defaultValue = "0") page: Int,
+                         @RequestParam(value = "size", defaultValue = "10") size: Int): ResponseEntity<RestaurantResponsePage> {
+        return ResponseEntity(restaurantService.getRestaurantAllList(PageRequest.of(page, size)), HttpStatus.OK)
     }
 
     @RequestMapping(value = ["/restaurant/{rid}"], method = [RequestMethod.GET])
     fun restaurantGet(@PathVariable rid: String): ResponseEntity<RestaurantResponse> {
-        var response = restaurantService.getRestaurantOne(rid)
-        if (response != null) {
-            return ResponseEntity(response, HttpStatus.OK)
+        val response = restaurantService.getRestaurantOne(rid)
+        return if (response != null) {
+            ResponseEntity(response, HttpStatus.OK)
         } else {
-            return ResponseEntity(null, HttpStatus.NOT_FOUND)
+            ResponseEntity(null, HttpStatus.NOT_FOUND)
         }
     }
 
     @RequestMapping(value = ["/restaurant/name/{name}"], method = [RequestMethod.GET])
     fun restaurantGetName(@PathVariable name: String): ResponseEntity<RestaurantResponse> {
-        var response = restaurantService.getRestaurantOneByName(name)
-        if (response != null) {
-            return ResponseEntity(response, HttpStatus.OK)
+        val response = restaurantService.getRestaurantOneByName(name)
+        return if (response != null) {
+            ResponseEntity(response, HttpStatus.OK)
         } else {
-            return ResponseEntity(null, HttpStatus.NOT_FOUND)
+            ResponseEntity(null, HttpStatus.NOT_FOUND)
         }
     }
 

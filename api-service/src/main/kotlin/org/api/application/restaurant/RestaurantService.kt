@@ -3,11 +3,13 @@ package org.api.application.restaurant
 import org.api.entity.restaurant.RestaurantEntity
 import org.api.entity.restaurant.RestaurantRepository
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
-open class RestaurantService {
+class RestaurantService {
 
     @Autowired
     private lateinit var restaurantRepository: RestaurantRepository
@@ -15,42 +17,43 @@ open class RestaurantService {
 
     @Transactional
     fun saveRestaurant(request: RestaurantRequest) : RestaurantResponse? {
-        var entity: RestaurantEntity = restaurantRepository.save(RestaurantClassUtils.requestToEntity(request));
+        val entity: RestaurantEntity = restaurantRepository.save(RestaurantClassUtils.requestToEntity(request));
         return RestaurantClassUtils.entityToResponse(entity)
     }
 
     @Transactional(readOnly = true)
-    fun getRestaurantAllList() : List<RestaurantResponse>? {
-        var list: MutableList<RestaurantEntity?> = restaurantRepository.findAll();
-        var restaurantList = arrayListOf<RestaurantResponse>();
+    fun getRestaurantAllList(page: Pageable) : RestaurantResponsePage? {
+        val list: Page<RestaurantEntity?> = restaurantRepository.findAll(page);
+        val restaurantList = arrayListOf<RestaurantResponse>();
         for (entity in list) {
             if (entity != null) {
                 restaurantList.add(RestaurantClassUtils.entityToResponse(entity))
             }
 
         }
-        return restaurantList;
+
+        return RestaurantResponsePage(restaurantList, list.pageable.pageSize, list.pageable.pageNumber);
     }
 
     @Transactional(readOnly = true)
     fun getRestaurantOne(rid:String) : RestaurantResponse? {
-        var option = restaurantRepository.findById(rid)
-        if (option.isPresent) {
-            var entity = option.get()
-            return RestaurantClassUtils.entityToResponse(entity)
+        val option = restaurantRepository.findById(rid)
+        return if (option.isPresent) {
+            val entity = option.get()
+            RestaurantClassUtils.entityToResponse(entity)
         } else {
-            return null;
+            null;
         }
     }
 
     @Transactional(readOnly = true)
     fun getRestaurantOneByName(name:String) : RestaurantResponse? {
-        var option = restaurantRepository.findByName(name)
-        if (option.isPresent) {
-            var entity = option.get()
-            return RestaurantClassUtils.entityToResponse(entity)
+        val option = restaurantRepository.findByName(name)
+        return if (option.isPresent) {
+            val entity = option.get()
+            RestaurantClassUtils.entityToResponse(entity)
         } else {
-            return null;
+            null;
         }
     }
 

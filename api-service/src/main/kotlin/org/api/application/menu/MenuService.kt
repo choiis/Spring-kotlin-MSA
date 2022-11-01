@@ -14,38 +14,36 @@ class MenuService {
     private lateinit var menuRepository: MenuRepository
 
     @Transactional
-    fun saveMenu(menu: MenuRequest) : MenuResponse? {
-        var entity: MenuEntity = menuRepository.save(MenuClassUtils.requestToEntity(menu));
+    fun saveMenu(menu: MenuRequest): MenuResponse? {
+        val entity: MenuEntity = menuRepository.save(MenuClassUtils.requestToEntity(menu));
         return MenuClassUtils.entityToResponse(entity)
     }
 
     @Transactional(readOnly = true)
-    fun getMenuOne(mid: String) : MenuResponse? {
+    fun getMenuOne(mid: String): MenuResponse? {
 
-        var option: Optional<MenuEntity> = menuRepository.findByMid(mid);
-        if(option.isPresent) {
-            var entity = option.get()
-            return MenuClassUtils.entityToResponse(entity)
+        val option: Optional<MenuEntity> = menuRepository.findByMid(mid);
+        return if (option.isPresent) {
+            val entity = option.get()
+            MenuClassUtils.entityToResponse(entity)
         } else {
-            return null;
+            null;
         }
     }
 
 
     @Transactional(readOnly = true)
-    fun getMenuByRid(rid: String) : List<MenuResponse> {
-       var list = menuRepository.findByRestaurant_Rid(rid)
-        var menuList = arrayListOf<MenuResponse>();
+    fun getMenuByRid(rid: String): List<MenuResponse> {
+        val list = menuRepository.findByRestaurant_Rid(rid)
+        val menuList: ArrayList<MenuResponse> = arrayListOf<MenuResponse>();
         for (entity in list) {
-            if (entity != null) {
-                menuList.add(MenuClassUtils.entityToResponse(entity))
-            }
+            menuList.add(MenuClassUtils.entityToResponse(entity))
         }
         return menuList;
     }
 
     @Transactional
-    fun removeMenuOne(mid:String) {
+    fun removeMenuOne(mid: String) {
         var vo: MenuEntity = MenuEntity();
         vo.mid = mid;
         menuRepository.delete(vo)
