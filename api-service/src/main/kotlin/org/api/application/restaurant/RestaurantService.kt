@@ -23,7 +23,7 @@ class RestaurantService {
 
     @Transactional(readOnly = true)
     fun getRestaurantAllList(page: Pageable) : RestaurantResponsePage? {
-        val list: Page<RestaurantEntity?> = restaurantRepository.findAll(page);
+        val list: Page<RestaurantEntity?> = restaurantRepository.findAllByOrderByName(page);
         val restaurantList = arrayListOf<RestaurantResponse>();
         for (entity in list) {
             if (entity != null) {
