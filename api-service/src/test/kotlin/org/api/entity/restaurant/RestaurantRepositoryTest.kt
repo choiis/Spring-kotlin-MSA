@@ -90,7 +90,7 @@ class RestaurantRepositoryTest {
 
         sut.delete(entity)
         val optional2: Optional<RestaurantEntity?> = sut.findById(rid)
-        Assertions.assertTrue(optional2.isEmpty)
+        Assertions.assertFalse(optional2.isPresent)
 
     }
 

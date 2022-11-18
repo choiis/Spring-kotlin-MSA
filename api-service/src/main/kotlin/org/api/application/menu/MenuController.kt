@@ -25,7 +25,7 @@ class MenuController {
         return if (response != null) {
             ResponseEntity(response, HttpStatus.OK)
         } else {
-            ResponseEntity(null, HttpStatus.NOT_FOUND)
+            ResponseEntity(HttpStatus.NOT_FOUND)
         }
     }
 

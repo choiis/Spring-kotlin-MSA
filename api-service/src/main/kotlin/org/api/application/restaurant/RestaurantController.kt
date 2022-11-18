@@ -23,7 +23,7 @@ class RestaurantController {
 
     @RequestMapping(value = ["/restaurant"], method = [RequestMethod.GET])
     fun restaurantAllGet(@RequestParam(value = "page", defaultValue = "0") page: Int,
-                         @RequestParam(value = "size", defaultValue = "10") size: Int): ResponseEntity<RestaurantResponsePage> {
+                         @RequestParam(value = "size", defaultValue = "10") size: Int): ResponseEntity<RestaurantResponsePage?> {
         return ResponseEntity(restaurantService.getRestaurantAllList(PageRequest.of(page, size)), HttpStatus.OK)
     }
 
@@ -33,7 +33,7 @@ class RestaurantController {
         return if (response != null) {
             ResponseEntity(response, HttpStatus.OK)
         } else {
-            ResponseEntity(null, HttpStatus.NOT_FOUND)
+            ResponseEntity( HttpStatus.NOT_FOUND)
         }
     }
 
@@ -43,7 +43,7 @@ class RestaurantController {
         return if (response != null) {
             ResponseEntity(response, HttpStatus.OK)
         } else {
-            ResponseEntity(null, HttpStatus.NOT_FOUND)
+            ResponseEntity(HttpStatus.NOT_FOUND)
         }
     }
 
