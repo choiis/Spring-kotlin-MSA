@@ -1,9 +1,8 @@
-package org.api.application.restaurant
+package org.api.application.menu
 
 import com.github.springtestdbunit.DbUnitTestExecutionListener
 import com.github.springtestdbunit.annotation.DbUnitConfiguration
 import com.github.springtestdbunit.dataset.ReplacementDataSetLoader
-
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import org.api.config.TestDBUnitConfig
@@ -33,17 +32,15 @@ import org.springframework.transaction.annotation.Transactional
 @Import(TestDBUnitConfig::class)
 @DbUnitConfiguration(databaseConnection = ["dbUnitDatabaseConnection"], dataSetLoader = ReplacementDataSetLoader::class)
 @Transactional(propagation = Propagation.NOT_SUPPORTED)
-class RestaurantControllerTest {
+class MenuControllerTest {
 
     @Autowired
     private val mockMvc: MockMvc? = null
 
-    @DisplayName("Restaurant CRUD Test")
+    @DisplayName("Menu CRUD Test")
     @Test
-    fun restaurantAPITest() {
-        val name = "name1"
-        val location = "seoul"
-        val response = mockMvc!!.perform(
+    fun menuAPITest() {
+        val res = mockMvc!!.perform(
             MockMvcRequestBuilders.post("/v1/restaurant")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(
@@ -58,33 +55,62 @@ class RestaurantControllerTest {
         )
             .andDo(MockMvcResultHandlers.print())
             .andExpect(MockMvcResultMatchers.status().isCreated)
-            .andExpect(MockMvcResultMatchers.jsonPath("$.name", Is.`is`(name)))
-            .andExpect(MockMvcResultMatchers.jsonPath("$.location", Is.`is`(location)))
             .andReturn().response
 
-        Assertions.assertNotNull(response)
-        val content = response.contentAsString
+        Assertions.assertNotNull(res)
+        val content = res.contentAsString
         Assertions.assertNotNull(content)
-        val jsonObject:JsonObject = JsonParser().parse(content).asJsonObject
+        val jsonObject: JsonObject = JsonParser().parse(content).asJsonObject
         val ridQuoted:String = jsonObject.get("rid").toString()
         val rid = ridQuoted.subSequence(1, ridQuoted.length - 1)
         Assertions.assertNotNull(rid)
+
+
+        val name = "dish"
+        val star = 7
+        val cost = 10000
+        val response = mockMvc!!.perform(
+            MockMvcRequestBuilders.post("/v1/menu")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(
+                    "{" +
+                            "\"rid\" : \"" + rid + "\"" +
+                            ",\"name\" : \"" + name +"\"" +
+                            ",\"star\" : \"" + star + "\"" +
+                            ",\"cost\" : \"" +cost + "\"" +
+                            "}"
+                )
+        )
+            .andDo(MockMvcResultHandlers.print())
+            .andExpect(MockMvcResultMatchers.status().isCreated)
+            .andReturn().response
+
+        Assertions.assertNotNull(response)
+        val content2 = response.contentAsString
+        Assertions.assertNotNull(content2)
+        val jsonObject2: JsonObject = JsonParser().parse(content2).asJsonObject
+        val midQuoted:String = jsonObject2.get("mid").toString()
+        Assertions.assertNotNull(midQuoted)
+        val mid = midQuoted.subSequence(1, midQuoted.length - 1)
+        Assertions.assertNotNull(mid)
+
         mockMvc.perform(
-            MockMvcRequestBuilders.get("/v1/restaurant/$rid")
+            MockMvcRequestBuilders.get("/v1/menu/$mid")
         )
             .andDo(MockMvcResultHandlers.print())
             .andExpect(MockMvcResultMatchers.status().isOk)
+            .andExpect(MockMvcResultMatchers.jsonPath("$.star", Is.`is`(star)))
             .andExpect(MockMvcResultMatchers.jsonPath("$.name", Is.`is`(name)))
-            .andExpect(MockMvcResultMatchers.jsonPath("$.location", Is.`is`(location)))
+            .andExpect(MockMvcResultMatchers.jsonPath("$.cost", Is.`is`(cost)))
             .andReturn()
 
         mockMvc.perform(
-            MockMvcRequestBuilders.delete("/v1/restaurant/$rid")
+            MockMvcRequestBuilders.delete("/v1/menu/$mid")
         ).andDo(MockMvcResultHandlers.print())
             .andExpect(MockMvcResultMatchers.status().isNoContent)
 
-        mockMvc!!.perform(
-            MockMvcRequestBuilders.get("/v1/restaurant/$rid")
+        mockMvc.perform(
+            MockMvcRequestBuilders.get("/v1/menu/$mid")
         )
             .andDo(MockMvcResultHandlers.print())
             .andExpect(MockMvcResultMatchers.status().isNotFound)
