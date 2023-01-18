@@ -51,12 +51,12 @@ class RestaurantRepositoryTest {
 
         val pageSize: Int = 4
         val page: Pageable = PageRequest.of(0, pageSize)
-        val list1: Page<RestaurantEntity?> = sut.findAllByOrderByName(page)
+        val list1: Page<RestaurantEntity> = sut.findAllByOrderByName(page)
         Assertions.assertEquals(pageSize, list1.content.size)
         Assertions.assertEquals(name2, list1.content[1]?.name)
 
         val page2: Pageable = PageRequest.of(1, pageSize)
-        val list2: Page<RestaurantEntity?> = sut.findAllByOrderByName(page2)
+        val list2: Page<RestaurantEntity> = sut.findAllByOrderByName(page2)
         Assertions.assertEquals(2, list2.content.size)
         Assertions.assertEquals(name6, list2.content[1]?.name)
     }

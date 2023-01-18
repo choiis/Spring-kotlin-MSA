@@ -16,27 +16,20 @@ class RestaurantService {
 
 
     @Transactional
-    fun saveRestaurant(request: RestaurantRequest) : RestaurantResponse? {
+    fun saveRestaurant(request: RestaurantRequest): RestaurantResponse? {
         val entity: RestaurantEntity = restaurantRepository.save(RestaurantClassUtils.requestToEntity(request));
         return RestaurantClassUtils.entityToResponse(entity)
     }
 
     @Transactional(readOnly = true)
-    fun getRestaurantAllList(page: Pageable) : RestaurantResponsePage? {
-        val list: Page<RestaurantEntity?> = restaurantRepository.findAllByOrderByName(page);
-        val restaurantList = arrayListOf<RestaurantResponse>();
-        for (entity in list) {
-            if (entity != null) {
-                restaurantList.add(RestaurantClassUtils.entityToResponse(entity))
-            }
-
-        }
-
-        return RestaurantResponsePage(restaurantList, list.pageable.pageSize, list.pageable.pageNumber);
+    fun getRestaurantAllList(page: Pageable): Page<RestaurantResponse> {
+        val entityPage: Page<RestaurantEntity> = restaurantRepository.findAllByOrderByName(page);
+        val responsePage = entityPage.map { entity -> RestaurantClassUtils.entityToResponse(entity) };
+        return responsePage;
     }
 
     @Transactional(readOnly = true)
-    fun getRestaurantOne(rid:String) : RestaurantResponse? {
+    fun getRestaurantOne(rid: String): RestaurantResponse? {
         val option = restaurantRepository.findById(rid)
         return if (option.isPresent) {
             val entity = option.get()
@@ -47,7 +40,7 @@ class RestaurantService {
     }
 
     @Transactional(readOnly = true)
-    fun getRestaurantOneByName(name:String) : RestaurantResponse? {
+    fun getRestaurantOneByName(name: String): RestaurantResponse? {
         val option = restaurantRepository.findByName(name)
         return if (option.isPresent) {
             val entity = option.get()
@@ -58,7 +51,7 @@ class RestaurantService {
     }
 
     @Transactional
-    fun removeRestaurantOne(rid:String) {
+    fun removeRestaurantOne(rid: String) {
         var vo: RestaurantEntity = RestaurantEntity();
         vo.rid = rid;
         restaurantRepository.delete(vo)

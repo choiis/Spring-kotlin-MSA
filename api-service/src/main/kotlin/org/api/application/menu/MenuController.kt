@@ -1,6 +1,8 @@
 package org.api.application.menu
 
+import org.api.application.PageResponse
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.domain.PageRequest
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -30,8 +32,19 @@ class MenuController {
     }
 
     @RequestMapping(value = ["/menu/restaurant/{rid}"], method = [RequestMethod.GET])
-    fun menuRestaurantGet(@PathVariable rid: String): ResponseEntity<List<MenuResponse>> {
-        return ResponseEntity(menuService.getMenuByRid(rid), HttpStatus.OK)
+    fun menuRestaurantGet(
+        @PathVariable rid: String,
+        @RequestParam(value = "page", required = false, defaultValue = "0") page: Int,
+        @RequestParam(value = "size", required = false, defaultValue = "10") size: Int,
+    ): ResponseEntity<PageResponse<MenuResponse>> {
+        val page = PageRequest.of(page, size);
+        val pageResponse = menuService.getMenuByRid(rid, page);
+        return ResponseEntity(PageResponse<MenuResponse>(
+            pageResponse.content,
+            pageResponse.number,
+            pageResponse.size,
+            pageResponse.totalElements
+        ), HttpStatus.OK);
     }
 
     @ResponseBody

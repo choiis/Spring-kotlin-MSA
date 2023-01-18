@@ -9,7 +9,8 @@ import java.util.*
 @Repository
 interface RestaurantRepository : JpaRepository<RestaurantEntity?, String> {
 
-    fun findAllByOrderByName(page: Pageable): Page<RestaurantEntity?>
+    fun findAllByOrderByName(page: Pageable): Page<RestaurantEntity>
+
     fun findByName(name: String): Optional<RestaurantEntity>
 
 }

@@ -6,7 +6,7 @@ import org.api.entity.restaurant.RestaurantEntity
 class MenuClassUtils {
 
     companion object {
-        fun requestToEntity(request: MenuRequest) : MenuEntity {
+        fun requestToEntity(request: MenuRequest): MenuEntity {
             var entity: MenuEntity = MenuEntity()
             entity.restaurant = RestaurantEntity()
             entity.restaurant!!.rid = request.rid
@@ -16,8 +16,8 @@ class MenuClassUtils {
             return entity
         }
 
-        fun entityToResponse(entity: MenuEntity) : MenuResponse {
-            return MenuResponse(entity.mid,entity.restaurant!!.rid,entity.name,entity.star, entity.cost)
+        fun entityToResponse(entity: MenuEntity): MenuResponse {
+            return MenuResponse(entity.mid, entity.restaurant!!.rid, entity.name, entity.star, entity.cost)
         }
     }
 

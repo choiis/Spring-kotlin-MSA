@@ -3,6 +3,8 @@ package org.api.application.menu
 import org.api.entity.menu.MenuEntity
 import org.api.entity.menu.MenuRepository
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.util.*
@@ -33,13 +35,10 @@ class MenuService {
 
 
     @Transactional(readOnly = true)
-    fun getMenuByRid(rid: String): List<MenuResponse> {
-        val list = menuRepository.findByRestaurant_Rid(rid)
-        val menuList: ArrayList<MenuResponse> = arrayListOf<MenuResponse>();
-        for (entity in list) {
-            menuList.add(MenuClassUtils.entityToResponse(entity))
-        }
-        return menuList;
+    fun getMenuByRid(rid: String, page: Pageable): Page<MenuResponse> {
+        val entityPage: Page<MenuEntity> = menuRepository.findByRestaurant_Rid(rid, page);
+        val responsePage = entityPage.map { entity -> MenuClassUtils.entityToResponse(entity) };
+        return responsePage;
     }
 
     @Transactional

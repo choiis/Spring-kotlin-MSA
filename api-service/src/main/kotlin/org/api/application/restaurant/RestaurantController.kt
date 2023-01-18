@@ -1,5 +1,6 @@
 package org.api.application.restaurant
 
+import org.api.application.PageResponse
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest
 import org.springframework.http.HttpStatus;
@@ -22,9 +23,20 @@ class RestaurantController {
 
 
     @RequestMapping(value = ["/restaurant"], method = [RequestMethod.GET])
-    fun restaurantAllGet(@RequestParam(value = "page", defaultValue = "0") page: Int,
-                         @RequestParam(value = "size", defaultValue = "10") size: Int): ResponseEntity<RestaurantResponsePage?> {
-        return ResponseEntity(restaurantService.getRestaurantAllList(PageRequest.of(page, size)), HttpStatus.OK)
+    fun restaurantAllGet(
+        @RequestParam(value = "page", defaultValue = "0") page: Int,
+        @RequestParam(value = "size", defaultValue = "10") size: Int,
+    ): ResponseEntity<PageResponse<RestaurantResponse>> {
+        val page = PageRequest.of(page, size);
+        val pageResponse = restaurantService.getRestaurantAllList(page);
+        return ResponseEntity(
+            PageResponse<RestaurantResponse>(
+                pageResponse.content,
+                pageResponse.number,
+                pageResponse.size,
+                pageResponse.totalElements
+            ), HttpStatus.OK
+        )
     }
 
     @RequestMapping(value = ["/restaurant/{rid}"], method = [RequestMethod.GET])
@@ -33,7 +45,7 @@ class RestaurantController {
         return if (response != null) {
             ResponseEntity(response, HttpStatus.OK)
         } else {
-            ResponseEntity( HttpStatus.NOT_FOUND)
+            ResponseEntity(HttpStatus.NOT_FOUND)
         }
     }
 

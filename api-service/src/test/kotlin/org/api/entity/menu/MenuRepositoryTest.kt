@@ -11,6 +11,9 @@ import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.PageRequest
+import org.springframework.data.domain.Pageable
 import java.util.Optional
 
 @DataJpaTest
@@ -51,9 +54,10 @@ class MenuRepositoryTest {
         sut.save(MenuClassUtils.requestToEntity(createMenuEntity(rid, "menu1", 9, 1000)))
         sut.save(MenuClassUtils.requestToEntity(createMenuEntity(rid, "menu2", 10, 2000)))
 
-        val list: List<MenuEntity> = sut.findByRestaurant_Rid(rid)
-        Assertions.assertEquals(2, list.size)
-        for (entity in list) {
+        val page: Pageable = PageRequest.of(0, 10);
+        val pageResponse: Page<MenuEntity> = sut.findByRestaurant_Rid(rid, page);
+        Assertions.assertEquals(2, pageResponse.totalElements)
+        for (entity in pageResponse.content) {
             Assertions.assertEquals(rid, entity.restaurant!!.rid)
         }
     }
