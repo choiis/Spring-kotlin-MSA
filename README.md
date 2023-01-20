@@ -46,6 +46,9 @@ docker-compose up
 * mvn -pl api-service spring-boot:run -Dspring-boot.run.jvmArguments="-Dspring.profiles.active=dev1"
 * mvn -pl api-service spring-boot:run -Dspring-boot.run.jvmArguments="-Dspring.profiles.active=dev2"
 
+### api service swagger
+* You can use api service document at http://localhost:8100/swagger-ui/index.html
+
 ## Run all with docker-compose
 
 ### Build all

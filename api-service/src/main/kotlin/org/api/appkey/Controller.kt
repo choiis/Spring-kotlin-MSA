@@ -1,5 +1,6 @@
 package org.api.appkey
 
+import io.swagger.v3.oas.annotations.Operation
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
@@ -17,12 +18,14 @@ class Controller {
     private lateinit var apiService: ApiService
 
 
+    @Operation(summary = "appkey select API", tags = ["appkey API"])
     @GetMapping(value = ["/appkey/{appkey}"])
     fun getAppKey(@PathVariable appkey: String?): ResponseEntity<UserAppkey?> {
         log.info("getAppKey ", appkey)
         return ResponseEntity(apiService.getAppKey(appkey), HttpStatus.OK)
     }
 
+    @Operation(summary = "appkey insert API", tags = ["appkey API"])
     @ResponseBody
     @RequestMapping(value = ["/appkey"], method = [RequestMethod.POST])
     fun saveAppKey(@RequestBody vo: UserAppkey?): ResponseEntity<UserAppkey?> {
@@ -32,6 +35,7 @@ class Controller {
         return ResponseEntity(vo, HttpStatus.CREATED)
     }
 
+    @Operation(summary = "appkey delete API", tags = ["appkey API"])
     @ResponseBody
     @RequestMapping(value = ["/appkey/{appkey}"], method = [RequestMethod.DELETE])
     fun deleteAppKey(@PathVariable appkey: String?): ResponseEntity<UserAppkey> {

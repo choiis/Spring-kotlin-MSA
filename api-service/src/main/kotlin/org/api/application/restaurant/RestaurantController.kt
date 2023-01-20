@@ -1,5 +1,6 @@
 package org.api.application.restaurant
 
+import io.swagger.v3.oas.annotations.Operation
 import org.api.application.PageResponse
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest
@@ -15,6 +16,7 @@ class RestaurantController {
     @Autowired
     private lateinit var restaurantService: RestaurantService
 
+    @Operation(summary = "Restaurant insert API", tags = ["Restaurant API"])
     @RequestMapping(value = ["/restaurant"], method = [RequestMethod.POST])
     fun restaurantPost(@RequestBody vo: RestaurantRequest?): ResponseEntity<RestaurantResponse?> {
         val response = restaurantService.saveRestaurant(vo!!)
@@ -22,6 +24,7 @@ class RestaurantController {
     }
 
 
+    @Operation(summary = "Restaurant select all with pagination API", tags = ["Restaurant API"])
     @RequestMapping(value = ["/restaurant"], method = [RequestMethod.GET])
     fun restaurantAllGet(
         @RequestParam(value = "page", defaultValue = "0") page: Int,
@@ -39,6 +42,7 @@ class RestaurantController {
         )
     }
 
+    @Operation(summary = "Restaurant select by ID API", tags = ["Restaurant API"])
     @RequestMapping(value = ["/restaurant/{rid}"], method = [RequestMethod.GET])
     fun restaurantGet(@PathVariable rid: String): ResponseEntity<RestaurantResponse> {
         val response = restaurantService.getRestaurantOne(rid)
@@ -49,6 +53,7 @@ class RestaurantController {
         }
     }
 
+    @Operation(summary = "Restaurant select by name API", tags = ["Restaurant API"])
     @RequestMapping(value = ["/restaurant/name/{name}"], method = [RequestMethod.GET])
     fun restaurantGetName(@PathVariable name: String): ResponseEntity<RestaurantResponse> {
         val response = restaurantService.getRestaurantOneByName(name)
@@ -59,6 +64,7 @@ class RestaurantController {
         }
     }
 
+    @Operation(summary = "Restaurant delete API", tags = ["Restaurant API"])
     @ResponseBody
     @RequestMapping(value = ["/restaurant/{rid}"], method = [RequestMethod.DELETE])
     fun restaurantDelete(@PathVariable rid: String): ResponseEntity<RestaurantResponse> {
