@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dataset>
+
+    <menu
+            mid ="123"
+            rid="11"
+            name="menu1"
+            star="5"
+            cost="10000"
+            created_datetime="2023-04-09 00:00:00"
+            modified_datetime="2023-04-09 00:00:00"
+            version="0"
+    />
+
+    <menu
+            mid ="124"
+            rid="11"
+            name="menu2"
+            star="4"
+            cost="9000"
+            created_datetime="2023-04-09 00:00:00"
+            modified_datetime="2023-04-09 00:00:00"
+            version="0"
+    />
+
+    <menu
+            mid ="125"
+            rid="12"
+            name="menu3"
+            star="5"
+            cost="20000"
+            created_datetime="2023-04-09 00:00:00"
+            modified_datetime="2023-04-09 00:00:00"
+            version="0"
+    />
+</dataset>
