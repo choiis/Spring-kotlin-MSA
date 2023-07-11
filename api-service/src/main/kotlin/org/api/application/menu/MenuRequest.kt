@@ -1,10 +1,5 @@
 package org.api.application.menu
 
-import lombok.Data
-import lombok.NoArgsConstructor
-
-@NoArgsConstructor
-@Data
 open class MenuRequest {
 
     var rid: String? = null
@@ -14,5 +9,16 @@ open class MenuRequest {
     var star:Int = 0
 
     var cost:Int = 0
+
+    constructor() {
+
+    }
+
+    constructor(rid: String?, name: String?, star: Int, cost: Int) {
+        this.rid = rid
+        this.name = name
+        this.star = star
+        this.cost = cost
+    }
 
 }

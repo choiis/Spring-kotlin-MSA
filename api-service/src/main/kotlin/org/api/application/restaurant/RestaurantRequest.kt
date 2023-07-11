@@ -1,10 +1,5 @@
 package org.api.application.restaurant
 
-import lombok.Data
-import lombok.NoArgsConstructor
-
-@NoArgsConstructor
-@Data
 open class RestaurantRequest {
 
     var rid:String? = null
@@ -16,4 +11,17 @@ open class RestaurantRequest {
     var star:Int = 0
 
     var concept: String? = null
+
+    constructor() {
+
+    }
+
+    constructor(rid: String?, name: String?, location: String?, star: Int, concept: String?) {
+        this.rid = rid
+        this.name = name
+        this.location = location
+        this.star = star
+        this.concept = concept
+    }
+
 }
