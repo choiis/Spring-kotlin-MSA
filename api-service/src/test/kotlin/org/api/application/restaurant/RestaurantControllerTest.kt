@@ -1,12 +1,8 @@
 package org.api.application.restaurant
 
-import com.github.springtestdbunit.DbUnitTestExecutionListener
-import com.github.springtestdbunit.annotation.DbUnitConfiguration
-import com.github.springtestdbunit.dataset.ReplacementDataSetLoader
-
+import com.fasterxml.jackson.databind.ObjectMapper
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
-import org.api.config.TestDBUnitConfig
 import org.hamcrest.core.Is
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.DisplayName
@@ -14,69 +10,66 @@ import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.context.annotation.Import
 import org.springframework.http.MediaType
-import org.springframework.test.context.TestExecutionListeners
 import org.springframework.test.web.servlet.MockMvc
+import org.springframework.test.web.servlet.ResultActions
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
-import org.springframework.transaction.annotation.Propagation
 import org.springframework.transaction.annotation.Transactional
+import kotlin.reflect.KClass
+
 
 @SpringBootTest
 @AutoConfigureMockMvc
-@TestExecutionListeners(
-    value = [DbUnitTestExecutionListener::class],
-    mergeMode = TestExecutionListeners.MergeMode.MERGE_WITH_DEFAULTS
-)
-@Import(TestDBUnitConfig::class)
-@DbUnitConfiguration(databaseConnection = ["dbUnitDatabaseConnection"], dataSetLoader = ReplacementDataSetLoader::class)
-@Transactional(propagation = Propagation.NOT_SUPPORTED)
+@Transactional
 class RestaurantControllerTest {
 
     @Autowired
     private val mockMvc: MockMvc? = null
+
+    @Autowired
+    protected var objectMapper = ObjectMapper()
+
+    fun <T> toJson(obj:T): String?  {
+        return objectMapper.writeValueAsString(obj)
+    }
+
+    fun <T> fromJson(resultActions: ResultActions, clazz: Class<T>?): T {
+        return objectMapper.readValue(resultActions.andReturn().response.contentAsString , clazz)
+    }
 
     @DisplayName("Restaurant CRUD Test")
     @Test
     fun restaurantAPITest() {
         val name = "name1"
         val location = "seoul"
-        val response = mockMvc!!.perform(
+        val res = mockMvc!!.perform(
             MockMvcRequestBuilders.post("/v1/restaurant")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(
-                    "{" +
-                            "\"rid\" : \"rid1\"" +
-                            ",\"name\" : \"name1\"" +
-                            ",\"location\" : \"seoul\"" +
-                            ",\"star\" : \"8\"" +
-                            ",\"concept\" : \"korean\"" +
-                            "}"
+                    toJson(RestaurantRequest("" , name,location,8, "korean"))!!
                 )
         )
-            .andDo(MockMvcResultHandlers.print())
             .andExpect(MockMvcResultMatchers.status().isCreated)
-            .andExpect(MockMvcResultMatchers.jsonPath("$.name", Is.`is`(name)))
-            .andExpect(MockMvcResultMatchers.jsonPath("$.location", Is.`is`(location)))
-            .andReturn().response
+
+
+        val response = fromJson(res, RestaurantResponse::class.java)
 
         Assertions.assertNotNull(response)
-        val content = response.contentAsString
-        Assertions.assertNotNull(content)
-        val jsonObject:JsonObject = JsonParser().parse(content).asJsonObject
-        val ridQuoted:String = jsonObject.get("rid").toString()
-        val rid = ridQuoted.subSequence(1, ridQuoted.length - 1)
+        Assertions.assertEquals(response.name, name)
+        Assertions.assertEquals(response.location, location)
+        val rid = response.rid
         Assertions.assertNotNull(rid)
-        mockMvc.perform(
+        var res2 = mockMvc.perform(
             MockMvcRequestBuilders.get("/v1/restaurant/$rid")
         )
             .andDo(MockMvcResultHandlers.print())
             .andExpect(MockMvcResultMatchers.status().isOk)
-            .andExpect(MockMvcResultMatchers.jsonPath("$.name", Is.`is`(name)))
-            .andExpect(MockMvcResultMatchers.jsonPath("$.location", Is.`is`(location)))
-            .andReturn()
+
+        val response2 = fromJson(res2, RestaurantResponse::class.java)
+        Assertions.assertEquals(response2.name , name)
+        Assertions.assertEquals(response2.location , location)
 
         mockMvc.perform(
             MockMvcRequestBuilders.delete("/v1/restaurant/$rid")
