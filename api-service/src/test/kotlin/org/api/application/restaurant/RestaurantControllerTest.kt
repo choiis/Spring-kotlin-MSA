@@ -1,9 +1,6 @@
 package org.api.application.restaurant
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.google.gson.JsonObject
-import com.google.gson.JsonParser
-import org.hamcrest.core.Is
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
@@ -17,7 +14,6 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 import org.springframework.transaction.annotation.Transactional
-import kotlin.reflect.KClass
 
 
 @SpringBootTest
@@ -31,12 +27,12 @@ class RestaurantControllerTest {
     @Autowired
     protected var objectMapper = ObjectMapper()
 
-    fun <T> toJson(obj:T): String?  {
+    fun <T> toJson(obj: T): String? {
         return objectMapper.writeValueAsString(obj)
     }
 
     fun <T> fromJson(resultActions: ResultActions, clazz: Class<T>?): T {
-        return objectMapper.readValue(resultActions.andReturn().response.contentAsString , clazz)
+        return objectMapper.readValue(resultActions.andReturn().response.contentAsString, clazz)
     }
 
     @DisplayName("Restaurant CRUD Test")
@@ -48,7 +44,7 @@ class RestaurantControllerTest {
             MockMvcRequestBuilders.post("/v1/restaurant")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(
-                    toJson(RestaurantRequest("" , name,location,8, "korean"))!!
+                    toJson(RestaurantRequest("", name, location, 8, "korean"))!!
                 )
         )
             .andExpect(MockMvcResultMatchers.status().isCreated)
@@ -68,8 +64,8 @@ class RestaurantControllerTest {
             .andExpect(MockMvcResultMatchers.status().isOk)
 
         val response2 = fromJson(res2, RestaurantResponse::class.java)
-        Assertions.assertEquals(response2.name , name)
-        Assertions.assertEquals(response2.location , location)
+        Assertions.assertEquals(response2.name, name)
+        Assertions.assertEquals(response2.location, location)
 
         mockMvc.perform(
             MockMvcRequestBuilders.delete("/v1/restaurant/$rid")

@@ -10,19 +10,19 @@ import org.springframework.web.bind.annotation.*
 import java.lang.invoke.MethodHandles
 
 @RestController
-class Controller {
+class AppKeyController {
 
     private val log: Logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass())
 
     @Autowired
-    private lateinit var apiService: ApiService
+    private lateinit var appKeyService: AppKeyService
 
 
     @Operation(summary = "appkey select API", tags = ["appkey API"])
     @GetMapping(value = ["/appkey/{appkey}"])
     fun getAppKey(@PathVariable appkey: String?): ResponseEntity<UserAppkey?> {
         log.info("getAppKey ", appkey)
-        return ResponseEntity(apiService.getAppKey(appkey), HttpStatus.OK)
+        return ResponseEntity(appKeyService.getAppKey(appkey), HttpStatus.OK)
     }
 
     @Operation(summary = "appkey insert API", tags = ["appkey API"])
@@ -31,7 +31,7 @@ class Controller {
     fun saveAppKey(@RequestBody vo: UserAppkey?): ResponseEntity<UserAppkey?> {
         var vo = vo
         log.info("saveAppKey ", vo)
-        vo = apiService.postAppKey(vo)
+        vo = appKeyService.postAppKey(vo)
         return ResponseEntity(vo, HttpStatus.CREATED)
     }
 
@@ -40,7 +40,7 @@ class Controller {
     @RequestMapping(value = ["/appkey/{appkey}"], method = [RequestMethod.DELETE])
     fun deleteAppKey(@PathVariable appkey: String?): ResponseEntity<UserAppkey> {
         log.info("deleteAppKey ")
-        apiService.deleteAppKey(appkey)
+        appKeyService.deleteAppKey(appkey)
         return ResponseEntity(HttpStatus.NO_CONTENT)
     }
 

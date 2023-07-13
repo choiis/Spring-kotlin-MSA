@@ -61,7 +61,7 @@ class MenuControllerTest {
         val content = res.contentAsString
         Assertions.assertNotNull(content)
         val jsonObject: JsonObject = JsonParser().parse(content).asJsonObject
-        val ridQuoted:String = jsonObject.get("rid").toString()
+        val ridQuoted: String = jsonObject.get("rid").toString()
         val rid = ridQuoted.subSequence(1, ridQuoted.length - 1)
         Assertions.assertNotNull(rid)
 
@@ -75,9 +75,9 @@ class MenuControllerTest {
                 .content(
                     "{" +
                             "\"rid\" : \"" + rid + "\"" +
-                            ",\"name\" : \"" + name +"\"" +
+                            ",\"name\" : \"" + name + "\"" +
                             ",\"star\" : \"" + star + "\"" +
-                            ",\"cost\" : \"" +cost + "\"" +
+                            ",\"cost\" : \"" + cost + "\"" +
                             "}"
                 )
         )
@@ -89,7 +89,7 @@ class MenuControllerTest {
         val content2 = response.contentAsString
         Assertions.assertNotNull(content2)
         val jsonObject2: JsonObject = JsonParser().parse(content2).asJsonObject
-        val midQuoted:String = jsonObject2.get("mid").toString()
+        val midQuoted: String = jsonObject2.get("mid").toString()
         Assertions.assertNotNull(midQuoted)
         val mid = midQuoted.subSequence(1, midQuoted.length - 1)
         Assertions.assertNotNull(mid)

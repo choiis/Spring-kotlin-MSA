@@ -27,7 +27,7 @@ import org.springframework.transaction.annotation.Transactional
 @DbUnitConfiguration(databaseConnection = ["dbUnitDatabaseConnection"], dataSetLoader = ReplacementDataSetLoader::class)
 @DatabaseSetup(
     connection = "dbUnitDatabaseConnection",
-    value = ["classpath:test-db/restaurant.xml","classpath:test-db/menu.xml"]
+    value = ["classpath:test-db/restaurant.xml", "classpath:test-db/menu.xml"]
 )
 @Transactional(propagation = Propagation.NOT_SUPPORTED)
 class MenuServiceTest {
@@ -39,8 +39,8 @@ class MenuServiceTest {
     @DisplayName("레스토랑의 메뉴 리스트를 테스트합니다")
     fun getMenuByRidTest() {
         val pageRequset = PageRequest.of(0, 10);
-        val rid:String = "11";
-        val menuResponse = menuService.getMenuByRid(rid , pageRequset);
+        val rid: String = "11";
+        val menuResponse = menuService.getMenuByRid(rid, pageRequset);
         Assertions.assertEquals(2, menuResponse.totalElements);
     }
 }

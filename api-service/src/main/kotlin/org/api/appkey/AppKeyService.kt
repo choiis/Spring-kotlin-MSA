@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service
 import java.lang.invoke.MethodHandles
 
 @Service
-class ApiService {
+class AppKeyService {
 
     @Autowired
     private lateinit var appKeyClient: AppKeyClient
