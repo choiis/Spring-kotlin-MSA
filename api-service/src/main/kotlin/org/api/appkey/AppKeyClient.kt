@@ -1,5 +1,6 @@
 package org.api.appkey
 
+import org.springframework.cache.annotation.Cacheable
 import org.springframework.cloud.openfeign.FeignClient
 import org.springframework.web.bind.annotation.*
 
@@ -7,6 +8,7 @@ import org.springframework.web.bind.annotation.*
 interface AppKeyClient {
 
     @GetMapping(value = ["/sm01/{appkey}"])
+    @Cacheable(cacheNames = arrayOf("getAppKey"), key = "#appkey")
     fun getAppKey(@PathVariable appkey: String): UserAppkey
 
     @PostMapping(value = ["/sm01"])
